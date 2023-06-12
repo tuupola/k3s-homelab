@@ -24,3 +24,11 @@ $ kubectl port-forward service/traefik-dashboard 9000:9000 --namespace kube-syst
 ```
 
 http://localhost:9000/dashboard/
+
+# Whoami
+
+```
+$ kubectl apply -k bases/whoami
+$ curl --include http://whoami.internal/foo
+$ curl --include --insecure https://whoami.internal/bar
+```

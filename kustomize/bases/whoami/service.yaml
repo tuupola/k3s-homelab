@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: whoami
+  namespace: default
+  # These are not needed by considered a good practice
+  labels:
+    app.kubernetes.io/name: whoami
+    app.kubernetes.io/instance: whoami-default
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    app.kubernetes.io/name: whoami
+    app.kubernetes.io/instance: whoami-default
