@@ -23,7 +23,23 @@ If for some reason does not work try with port forward instead.
 $ kubectl port-forward service/traefik-dashboard 9000:9000 --namespace kube-system
 ```
 
-http://localhost:9000/dashboard/
+# Rancher
+
+Rancher is installed using Helm which I am not a big fan of. Rancher also require Kubernetes 1.24.x or older.
+
+```
+$ helm repo add rancher-latest https://releases.rancher.com/server-charts/latest
+$ kubectl create namespace cattle-system
+$ helm install rancher rancher-latest/rancher \
+  --namespace cattle-system \
+  --set hostname=rancher.internal \
+  --set bootstrapPassword=admin \
+  --set ingress.includeDefaultExtraAnnotations=false \
+  --set tls=external
+$ kubectl -n cattle-system rollout status deploy/rancher
+```
+
+https://rancher.internal/
 
 # Whoami
 
