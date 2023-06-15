@@ -1,6 +1,9 @@
 namespace: monitoring
 resources:
   - namespace.yaml
-  - configmap.yaml
   - deployment.yaml
   - service.yaml
+configMapGenerator:
+- name: prometheus-config
+  files:
+    - etc/prometheus.yaml
