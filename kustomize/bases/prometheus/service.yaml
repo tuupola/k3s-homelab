@@ -5,6 +5,7 @@ metadata:
   labels:
     app: prometheus
 spec:
+  # ClusterIP is also the default
   type: ClusterIP
   ports:
     - port: 9090

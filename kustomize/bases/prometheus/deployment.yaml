@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: prometheus
-  #namespace: monitoring
   labels:
     app: prometheus
 spec:
@@ -21,6 +20,8 @@ spec:
           args:
             - --config.file=/etc/prometheus/prometheus.yaml
             - --storage.tsdb.path=/prometheus
+          # This is only informational and not necessarily needed.
+          # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.27/#container-v1-core
           # ports:
           #   - containerPort: 9090
           volumeMounts:
