@@ -2,23 +2,22 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: whoami
-  namespace: default
   # These are not needed by considered a good practice
   labels:
     app.kubernetes.io/name: whoami
-    app.kubernetes.io/instance: whoami-default
+    app.kubernetes.io/instance: whoami-example
 spec:
   replicas: 3
   selector:
     matchLabels:
       app.kubernetes.io/name: whoami
-      app.kubernetes.io/instance: whoami-default
+      app.kubernetes.io/instance: whoami-example
   template:
     metadata:
       # These are not needed by considered a good practice
       labels:
         app.kubernetes.io/name: whoami
-        app.kubernetes.io/instance: whoami-default
+        app.kubernetes.io/instance: whoami-example
     spec:
       containers:
       - name: whoami

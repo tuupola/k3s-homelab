@@ -1,4 +1,6 @@
+namespace: example
 resources:
+  - namespace.yaml
   - deployment.yaml
   - ingress.yaml
   - service.yaml
