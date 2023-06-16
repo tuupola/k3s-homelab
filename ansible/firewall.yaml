@@ -1,0 +1,10 @@
+---
+- hosts: all
+  become: true
+
+  tasks:
+    - name: Stop and disable firewalld if running
+      ansible.builtin.systemd:
+        name: firewalld
+        state: stopped
+        enabled: false
