@@ -1,0 +1,19 @@
+---
+- hosts: all
+  become: true
+
+  tasks:
+    - name: Set a hostname to match inventory
+      ansible.builtin.hostname:
+        name: "{{ inventory_hostname_short }}"
+        use: systemd
+
+    - name: Add inventory entries /etc/hosts
+      ansible.builtin.blockinfile:
+        path: /etc/hosts
+        backup: yes
+        block: |
+          {% for host in groups['cluster'] %}
+          {{ ansible_ssh_host }} {{inventory_hostname_short}}.internal {{inventory_hostname_short}}
+          {% endfor %}
+        marker: "# {mark} ANSIBLE MANAGED BLOCK"
