@@ -1,0 +1,12 @@
+---
+- name: Build a single node k3s cluster
+  hosts: nuc-00
+  vars:
+    # Rancher needs Kubernetes < 1.25.0-0. Comment this out if
+    # not using Rancher to get the latest k3s.
+    k3s_release_version: v1.24.14+k3s1
+    k3s_become: true
+    k3s_server:
+      write-kubeconfig-mode: "0644"
+  roles:
+    - role: xanmanning.k3s
