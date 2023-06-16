@@ -7,9 +7,9 @@ metadata:
   annotations:
   labels:
     app: rancher
-    chart: rancher-2.7.1
-    heritage: Helm
-    release: rancher
+    # chart: rancher-2.7.1
+    # heritage: Helm
+    # release: rancher
 spec:
   replicas: 3
   selector:
@@ -42,13 +42,13 @@ spec:
               topologyKey: kubernetes.io/hostname
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms: 
+            nodeSelectorTerms:
               - matchExpressions:
                 - key: kubernetes.io/os
                   operator: NotIn
                   values:
                   - windows
-      tolerations: 
+      tolerations:
         - key: "cattle.io/os"
           value: "linux"
           effect: "NoSchedule"
