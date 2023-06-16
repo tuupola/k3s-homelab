@@ -1,14 +1,10 @@
 ---
-# Source: rancher/templates/clusterRoleBinding.yaml
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: rancher
   labels:
     app: rancher
-    # chart: rancher-2.7.1
-    # heritage: Helm
-    # release: rancher
 subjects:
 - kind: ServiceAccount
   name: rancher

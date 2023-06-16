@@ -1,14 +1,10 @@
 ---
-# Source: rancher/templates/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
   name: rancher
   labels:
     app: rancher
-    # chart: rancher-2.7.1
-    # heritage: Helm
-    # release: rancher
 spec:
   ports:
   - port: 80

@@ -1,5 +1,4 @@
 ---
-# Source: rancher/templates/deployment.yaml
 kind: Deployment
 apiVersion: apps/v1
 metadata:
@@ -7,9 +6,6 @@ metadata:
   annotations:
   labels:
     app: rancher
-    # chart: rancher-2.7.1
-    # heritage: Helm
-    # release: rancher
 spec:
   replicas: 3
   selector:

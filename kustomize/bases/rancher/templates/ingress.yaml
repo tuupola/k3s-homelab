@@ -1,19 +1,15 @@
 ---
-# Source: rancher/templates/ingress.yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: rancher
   labels:
     app: rancher
-    # chart: rancher-2.7.1
-    # heritage: Helm
-    # release: rancher
   # annotations:
   #   nginx.ingress.kubernetes.io/ssl-redirect: "false" # turn off ssl redirect for external.
 spec:
   rules:
-  - host: rancher.internal  # hostname to access rancher server
+  - host: rancher.internal
     http:
       paths:
       - backend:
