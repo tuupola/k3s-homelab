@@ -1,0 +1,9 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rancher-config
+  labels:
+    app: rancher
+data:
+  priorityClassName:  rancher-critical

@@ -1,0 +1,11 @@
+namespace: cattle-system
+resources:
+  - namespace.yaml
+  - templates/clusterRoleBinding.yaml
+  - templates/configMap.yaml
+  - templates/deployment.yaml
+  - templates/ingress.yaml
+  - templates/priorityClass.yaml
+  - templates/secret.yaml
+  - templates/service.yaml
+  - templates/serviceAccount.yaml

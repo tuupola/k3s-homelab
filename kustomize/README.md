@@ -25,7 +25,14 @@ $ kubectl port-forward service/traefik-dashboard 9000:9000 --namespace kube-syst
 
 # Rancher
 
-Rancher is installed using Helm which I am not a big fan of. Rancher also require Kubernetes 1.24.x or older.
+Rancher requires Kubernetes 1.24.x or older. Install with either Kustomize or Helm. Latter is the officially supported method but there is too much magic and Helm gives me a headache.
+
+```
+$ kubectl apply -k bases/rancher
+$ kubectl -n cattle-system rollout status deploy/rancher
+```
+
+Or with Helm.
 
 ```
 $ helm repo add rancher-latest https://releases.rancher.com/server-charts/latest
@@ -38,6 +45,8 @@ $ helm install rancher rancher-latest/rancher \
   --set tls=external
 $ kubectl -n cattle-system rollout status deploy/rancher
 ```
+
+Bootstrap user and password is `admin`.
 
 https://rancher.internal/
 
