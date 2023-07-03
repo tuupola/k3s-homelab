@@ -14,6 +14,6 @@
         backup: yes
         block: |
           {% for host in groups['cluster'] %}
-          {{ ansible_ssh_host }} {{inventory_hostname_short}}.internal {{inventory_hostname_short}}
+          {{ hostvars[host].ansible_host }} {{ hostvars[host].inventory_hostname_short}}.internal {{ hostvars[host].inventory_hostname_short }}
           {% endfor %}
         marker: "# {mark} ANSIBLE MANAGED BLOCK"
