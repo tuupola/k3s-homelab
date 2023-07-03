@@ -1,5 +1,6 @@
 - import_playbook: users.yaml
 - import_playbook: hosts.yaml
 - import_playbook: firewall.yaml
-- import_playbook: single.yaml
+#- import_playbook: single.yaml
+- import_playbook: multi.yaml
 #- import_playbook: upgrade.yaml
