@@ -1,0 +1,12 @@
+namespace: openebs
+resources:
+  - namespace.yaml
+  - templates/serviceaccount.yaml
+  - templates/ndm/cm-node-disk-manager.yaml
+  - templates/ndm/daemonset-ndm.yaml
+  - templates/ndm/deployment-ndm-operator.yaml
+  - templates/localprovisioner/device-class.yaml
+  - templates/localprovisioner/hostpath-class.yaml
+  - templates/localprovisioner/deployment-local-provisioner.yaml
+  - templates/clusterrole.yaml
+  - templates/clusterrolebinding.yaml
