@@ -1,0 +1,18 @@
+---
+# Source: openebs/templates/localprovisioner/device-class.yaml
+# The second operand in the AND operation can be removed
+# when enableDeviceClass is deprecated.
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: openebs-device
+  annotations:
+    openebs.io/cas-type: local
+    cas.openebs.io/config: |
+      - name: StorageType
+        value: "device"
+      - name: FSType
+        value: "ext4"
+provisioner: openebs.io/local
+volumeBindingMode: WaitForFirstConsumer
+reclaimPolicy: Delete
