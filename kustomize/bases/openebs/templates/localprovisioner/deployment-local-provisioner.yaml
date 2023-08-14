@@ -72,7 +72,7 @@ spec:
         # OPENEBS_IO_BASE_PATH is the environment variable that provides the
         # default base path on the node where host-path PVs will be provisioned.
         - name: OPENEBS_IO_ENABLE_ANALYTICS
-          value: "true"
+          value: "false"
         - name: OPENEBS_IO_BASE_PATH
           value: "/var/openebs/local"
         - name: OPENEBS_IO_HELPER_IMAGE
