@@ -50,6 +50,31 @@ Bootstrap user and password is `admin`.
 
 https://rancher.internal/
 
+# OpenEBS with NDM and local provisioner
+
+This installs only OpenEBS with NDM and local provisioners. You most likely want also to intall cStor.
+
+```
+$ kubectl apply -k bases/openebs
+```
+
+Or with Helm.
+
+```
+$ helm repo add openebs https://openebs.github.io/charts
+$ helm repo update
+$ helm install openebs openebs/openebs \
+  --namespace openebs \
+  --set jiva.enabled=false \
+  --set cstor.enabled=false \
+  --set mayastor.enabled=false \
+  --set ndm.enabled=true \
+  --set legacy.enabled=false \
+  --set ndm.filters.excludePaths="/dev/loop\,/dev/fd0\,/dev/sr0\,/dev/ram\,/dev/dm-\,/dev/md\,/dev/rbd\,/dev/zd\,/dev/zram0" \
+  --set analytics.enabled=false \
+  --create-namespace
+```
+
 # Whoami
 
 ```
