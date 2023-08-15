@@ -14,6 +14,8 @@ You must be able to remotely login with either `root` or `ansible` user. If usin
 
 ```
 $ ssh-copy-id -i ~/.ssh/ansible_ed25519.pub root@nuc-00.internal
+$ ssh-copy-id -i ~/.ssh/ansible_ed25519.pub root@nuc-01.internal
+$ ssh-copy-id -i ~/.ssh/ansible_ed25519.pub root@nuc-02.internal
 $ ansible-playbook -v users.yaml
 ```
 
@@ -31,6 +33,34 @@ This currently just disables firewalld.
 
 ```
 $ ansible-playbook -v firewall.yaml
+```
+
+## Resize root disk to 32G
+
+```
+$ ansible-playbook -v resize-root.yaml
+```
+
+Could also be done manually.
+
+```
+$ df -h /
+Filesystem               Size  Used Avail Use% Mounted on
+/dev/mapper/fedora-root   15G   13G  2.7G  83% /
+
+$ sudo lvdisplay
+  --- Logical volume ---
+  LV Path                /dev/fedora/root
+  LV Name                root
+  VG Name                fedora
+...
+
+$ sudo lvresize --size 32G --resizefs /dev/fedora/root
+  Size of logical volume fedora/root changed from 16.00 GiB (4096 extents) to 32.00 GiB (8192 extents).
+
+$ df -h /
+Filesystem               Size  Used Avail Use% Mounted on
+/dev/mapper/fedora-root   32G   13G   20G  39% /
 ```
 
 ## Install K3S
