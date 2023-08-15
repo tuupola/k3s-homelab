@@ -63,6 +63,12 @@ Filesystem               Size  Used Avail Use% Mounted on
 /dev/mapper/fedora-root   32G   13G   20G  39% /
 ```
 
+## Upgrade all DNF packages to latest
+
+```
+$ ansible-playbook -v upgrade.yaml
+```
+
 ## Install K3S
 
 You can either install a single node or a multinode cluster.
