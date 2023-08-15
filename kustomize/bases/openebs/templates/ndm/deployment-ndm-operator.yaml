@@ -6,9 +6,7 @@ metadata:
   name: openebs-ndm-operator
   labels:
     app: openebs
-    chart: openebs-3.8.0
     release: openebs
-    heritage: Helm
     component: ndm-operator
     openebs.io/component-name: ndm-operator
     openebs.io/version: 3.8.0

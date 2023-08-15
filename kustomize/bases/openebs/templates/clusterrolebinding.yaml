@@ -6,9 +6,7 @@ metadata:
   name: openebs
   labels:
     app: openebs
-    chart: openebs-3.8.0
     release: openebs
-    heritage: Helm
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole

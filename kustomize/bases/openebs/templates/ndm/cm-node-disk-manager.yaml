@@ -8,9 +8,7 @@ metadata:
   name: openebs-ndm-config
   labels:
     app: openebs
-    chart: openebs-3.8.0
     release: openebs
-    heritage: Helm
     component: ndm-config
     openebs.io/component-name: ndm-config
 data:
