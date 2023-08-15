@@ -83,7 +83,7 @@ $ ansible-playbook -v multi.yaml
 After installing copy the kubectl config file to your local machine and point it to correct host.
 
 ```
-$ scp ansible@nuc-00.internal:/etc/rancher/k3s/k3s.yaml
+$ scp ansible@nuc-00.internal:/etc/rancher/k3s/k3s.yaml .
 $ sed -i 's/127.0.0.1/nuc-00.internal/g' k3s.yaml
 $ export KUBECONFIG=/path/to/home-lab/k3s.yaml
 ```
@@ -95,3 +95,5 @@ nuc-00   Ready    control-plane,etcd,master   7h45m   v1.26.5+k3s1
 nuc-01   Ready    control-plane,etcd,master   7h38m   v1.26.5+k3s1
 nuc-02   Ready    control-plane,etcd,master   7h44m   v1.26.5+k3s1
 ```
+
+Now you can start installing stuff from kustomize folder.
