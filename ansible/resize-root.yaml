@@ -1,0 +1,14 @@
+---
+- hosts: all
+  become: true
+
+  name: Resize logical volumes
+
+  tasks:
+    - name: Resize root to 32G
+      community.general.lvol:
+        vg: fedora
+        lv: root
+        size: 32g
+        resizefs: true
+        shrink: false
