@@ -1,3 +1,4 @@
 namespace: longhorn-system
 resources:
   - https://raw.githubusercontent.com/longhorn/longhorn/v1.5.1/deploy/longhorn.yaml
+  - ingress.yaml
