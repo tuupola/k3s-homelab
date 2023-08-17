@@ -35,7 +35,7 @@ This currently just disables firewalld.
 $ ansible-playbook -v firewall.yaml
 ```
 
-## Resize root disk to 32G
+## Resize root disk
 
 ```
 $ ansible-playbook -v resize-root.yaml
@@ -84,7 +84,7 @@ After installing copy the kubectl config file to your local machine and point it
 
 ```
 $ scp ansible@nuc-00.internal:/etc/rancher/k3s/k3s.yaml .
-$ sed -i 's/127.0.0.1/nuc-00.internal/g' k3s.yaml
+$ sed -i 's/127.0.0.1/nuc-00/g' k3s.yaml
 $ export KUBECONFIG=/path/to/home-lab/k3s.yaml
 ```
 

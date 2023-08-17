@@ -5,10 +5,10 @@
   name: Resize logical volumes
 
   tasks:
-    - name: Resize root to 32G
+    - name: Resize root to 64G
       community.general.lvol:
-        vg: fedora
+        vg: rl
         lv: root
-        size: 32g
+        size: 64g
         resizefs: true
         shrink: false
