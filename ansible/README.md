@@ -96,4 +96,10 @@ nuc-01   Ready    control-plane,etcd,master   7h38m   v1.26.5+k3s1
 nuc-02   Ready    control-plane,etcd,master   7h44m   v1.26.5+k3s1
 ```
 
+# Longhorn prerequisites
+
+```
+$ ansible-playbook -v longhorn.yaml
+```
+
 Now you can start installing stuff from kustomize folder.

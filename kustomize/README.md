@@ -50,6 +50,13 @@ Bootstrap user and password is `admin`.
 
 https://rancher.internal/
 
+# Longhorn
+
+```
+$ kubectl apply -k bases/longhorn
+$ kubectl get pods -n longhorn-system --watch
+```
+
 # Whoami
 
 ```
