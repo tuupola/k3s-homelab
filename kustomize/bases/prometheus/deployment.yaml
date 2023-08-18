@@ -39,9 +39,19 @@ spec:
               mountPath: /etc/prometheus/
             - name: prometheus-storage
               mountPath: /prometheus/
+              subPath: ""
+      securityContext:
+        # These enable Prometheus to write to the pvc.
+        fsGroup: 65534
+        runAsGroup: 65534
+        runAsUser: 65534
       volumes:
         - name: prometheus-config
           configMap:
             name: prometheus-config
+        # Ephemeral storage, good for testing.
+        # - name: prometheus-storage
+        #   emptyDir: {}
         - name: prometheus-storage
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: prometheus
