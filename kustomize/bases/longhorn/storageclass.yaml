@@ -4,7 +4,7 @@ metadata:
   name: longhorn-retain
 provisioner: driver.longhorn.io
 allowVolumeExpansion: true
-# Only difference to the default "longhorn" storageclass.
+# This is the only difference to the default "longhorn" storageclass.
 reclaimPolicy: Retain
 volumeBindingMode: Immediate
 parameters:
