@@ -3,7 +3,11 @@ kind: Service
 metadata:
   name: prometheus
   labels:
-    app: prometheus
+    app.kubernetes.io/name: prometheus
+    app.kubernetes.io/component: server
+    app.kubernetes.io/part-of: prometheus
+    app.kubernetes.io/instance: prometheus-monitoring
+    app.kubernetes.io/version: v2.46.0
 spec:
   # ClusterIP is also the default
   type: ClusterIP
@@ -11,4 +15,6 @@ spec:
     - port: 9090
       targetPort: 9090
   selector:
-    app: prometheus
+    app.kubernetes.io/component: server
+    app.kubernetes.io/name: prometheus
+    app.kubernetes.io/instance: prometheus-monitoring

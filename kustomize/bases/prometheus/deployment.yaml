@@ -3,20 +3,30 @@ kind: Deployment
 metadata:
   name: prometheus
   labels:
-    app: prometheus
+    app.kubernetes.io/name: prometheus
+    app.kubernetes.io/component: server
+    app.kubernetes.io/part-of: prometheus
+    app.kubernetes.io/instance: prometheus-monitoring
+    app.kubernetes.io/version: v2.46.0
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: prometheus
+      app.kubernetes.io/component: server
+      app.kubernetes.io/name: prometheus
+      app.kubernetes.io/instance: prometheus-monitoring
   template:
     metadata:
       labels:
-        app: prometheus
+        app.kubernetes.io/name: prometheus
+        app.kubernetes.io/component: server
+        app.kubernetes.io/part-of: prometheus
+        app.kubernetes.io/instance: prometheus-monitoring
+        app.kubernetes.io/version: v2.46.0
     spec:
       containers:
         - name: prometheus
-          image: prom/prometheus
+          image: "quay.io/prometheus/prometheus:v2.46.0"
           args:
             - --config.file=/etc/prometheus/prometheus.yaml
             - --storage.tsdb.path=/prometheus
