@@ -1,0 +1,26 @@
+---
+- hosts: all
+  become: true
+
+  name: Longhorn prerequisites
+
+  tasks:
+    - name: Start and enable iscsid
+      ansible.builtin.systemd:
+        name: iscsid
+        state: started
+        enabled: true
+
+    - name: Install required packages
+      ansible.builtin.dnf:
+        name:
+          - bash
+          - curl
+          - grep
+          - gawk
+          - util-linux # lsblk,
+          - util-linux-core # findmnt, blkid
+          - nfs-utils
+        state: present
+        # allowerasing: true
+        # nobest: true

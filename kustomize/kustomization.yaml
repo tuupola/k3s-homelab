@@ -2,4 +2,5 @@ resources:
   #- bases/dashboard/
   - bases/traefik/
   - bases/rancher/
+  - bases/longhorn/
   - bases/whoami/

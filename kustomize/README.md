@@ -50,6 +50,21 @@ Bootstrap user and password is `admin`.
 
 https://rancher.internal/
 
+# Longhorn
+
+Make sure you have installed Longhorn prerequisites first.
+
+```
+$ ansible-playbook -v longhorn.yaml
+```
+
+```
+$ kubectl apply -k bases/longhorn
+$ kubectl get pods -n longhorn-system --watch
+```
+
+https://longhorn.internal/
+
 # Whoami
 
 ```
