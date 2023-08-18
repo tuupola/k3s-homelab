@@ -14,5 +14,5 @@ spec:
   resources:
     requests:
       storage: 16Gi
-  # This is also the default.
-  storageClassName: longhorn
+  # Use retain to avoid accidental deleting of the data.
+  storageClassName: longhorn-retain
