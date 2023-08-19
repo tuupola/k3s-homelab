@@ -9,8 +9,8 @@ metadata:
     app.kubernetes.io/instance: prometheus-monitoring
     app.kubernetes.io/version: v2.46.0
 spec:
-  # ClusterIP is also the default
-  type: ClusterIP
+  # Make a headless service.
+  clusterIP: None
   ports:
     - port: 9090
       targetPort: 9090
