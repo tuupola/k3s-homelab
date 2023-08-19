@@ -68,7 +68,7 @@ https://longhorn.internal/
 # Monitoring
 
 ```
-$ kubectl apply -k bases/prometheus
+$ kubectl apply -k bases/monitoring/prometheus
 $ kubectl -n monitoring rollout status deploy/prometheus
 ```
 
