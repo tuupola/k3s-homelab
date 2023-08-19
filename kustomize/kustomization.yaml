@@ -4,3 +4,4 @@ resources:
   - bases/rancher/
   - bases/longhorn/
   - bases/whoami/
+  - bases/prometheus/

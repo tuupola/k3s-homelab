@@ -65,6 +65,21 @@ $ kubectl get pods -n longhorn-system --watch
 
 https://longhorn.internal/
 
+# Monitoring
+
+```
+$ kubectl apply -k bases/monitoring/prometheus
+$ kubectl -n monitoring rollout status deploy/prometheus
+```
+
+If you accidentaly delete Prometheus the persistent volume should still be there. You can reuse the volume by first deleting the `spec.claimRef` block from the yaml and then redeploy.
+
+```
+$ kubectl get pv
+$ kubectl edit pv pvc-b1e4b59a-0cb0-4f2b-bed5-10c15d0d4f9c
+$ kubectl apply -k prometheus
+```
+
 # Whoami
 
 ```

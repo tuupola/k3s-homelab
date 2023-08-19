@@ -1,0 +1,11 @@
+namespace: monitoring
+resources:
+  - namespace.yaml
+  - pvc.yaml
+  - statefulset.yaml
+  - service.yaml
+  - ingress.yaml
+configMapGenerator:
+- name: prometheus-config
+  files:
+    - etc/prometheus.yaml
