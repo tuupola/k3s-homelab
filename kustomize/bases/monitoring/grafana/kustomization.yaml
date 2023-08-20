@@ -4,3 +4,7 @@ resources:
   - statefulset.yaml
   - service.yaml
   - ingress.yaml
+configMapGenerator:
+- name: grafana-datasources
+  files:
+    - etc/grafana/provisioning/datasources/prometheus.yaml

@@ -33,6 +33,8 @@ spec:
           #   - containerPort: 3000
           #     protocol: TCP
           volumeMounts:
+            - mountPath: /etc/grafana/provisioning/datasources
+              name: grafana-datasources
             - mountPath: /var/lib/grafana
               name: grafana-storage
           # https://grafana.com/docs/grafana/latest/setup-grafana/installation/kubernetes/
@@ -56,6 +58,9 @@ spec:
           - 0
 
       volumes:
+        - name: grafana-datasources
+          configMap:
+            name: grafana-datasources
         - name: grafana-storage
           persistentVolumeClaim:
             claimName: grafana
