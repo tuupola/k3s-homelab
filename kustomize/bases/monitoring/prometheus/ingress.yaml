@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/name: prometheus
     app.kubernetes.io/component: server
     app.kubernetes.io/part-of: prometheus
-    app.kubernetes.io/instance: prometheus-monitoring
+    app.kubernetes.io/instance: monitoring
     app.kubernetes.io/version: v2.46.0
   annotations:
     # Use only 80 and 443 entrypoint
