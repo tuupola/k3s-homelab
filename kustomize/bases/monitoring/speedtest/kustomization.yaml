@@ -1,0 +1,8 @@
+namespace: monitoring
+resources:
+  - deployment.yaml
+  - service.yaml
+configMapGenerator:
+- name: telegraf-config
+  files:
+    - etc/telegraf/telegraf.conf
