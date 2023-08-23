@@ -2,3 +2,5 @@ namespace: monitoring
 resources:
   - namespace.yaml
   - prometheus
+  - grafana
+  - internet
