@@ -14,3 +14,7 @@ scrape_configs:
   - job_name: speedtest
     static_configs:
       - targets: ["speedtest:9273"]
+
+  - job_name: energy
+    static_configs:
+      - targets: ["energy:9273"]

@@ -4,3 +4,4 @@ resources:
   - prometheus
   - grafana
   - internet
+  - energy
