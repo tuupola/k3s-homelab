@@ -4,4 +4,9 @@ resources:
   - bases/rancher/
   - bases/longhorn/
   - bases/whoami/
-  - bases/prometheus/
+  - bases/monitoring/prometheus/
+  #- bases/monitoring/grafana/
+  #- bases/monitoring/internet/
+  #- bases/monitoring/speedtest/
+  #- bases/monitoring/energy/
+  #- bases/monitoring/node-exporter/
