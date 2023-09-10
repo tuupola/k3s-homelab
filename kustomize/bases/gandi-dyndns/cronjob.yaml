@@ -1,0 +1,42 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: gandi-dyndns
+spec:
+  schedule: "*/15 * * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: alpine
+              image: alpine:3.18.3
+              imagePullPolicy: IfNotPresent
+              env:
+                - name: API_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: gandi-config
+                      key: API_KEY
+                - name: DOMAIN
+                  valueFrom:
+                    secretKeyRef:
+                      name: gandi-config
+                      key: DOMAIN
+                - name: SUBDOMAIN
+                  valueFrom:
+                    secretKeyRef:
+                      name: gandi-config
+                      key: SUBDOMAIN
+              volumeMounts:
+                - name: scripts
+                  mountPath: /scripts/
+              command:
+                - /bin/sh
+                - /scripts/gandi.sh
+          restartPolicy: OnFailure
+          volumes:
+            - name: scripts
+              configMap:
+                name: scripts
