@@ -16,10 +16,22 @@ JSON=$(cat <<EOF
 EOF
 )
 
-if [ $CURRENT_IP == $EXTERNAL_IP ]; then
-    echo "Nothing to do."
+# Make sure we have the CURRENT_IP
+if [ -z  ${CURRENT_IP} ]; then
+    echo "Failed to get CURRENT_IP."
+    exit 1
+fi
+
+# Make sure we have the EXTERNAL_IP
+if [ -z ${EXTERNAL_IP} ]; then
+    echo "Failed to get EXTERNAL_IP."
+    exit 1
+fi
+
+# Make sure EXTERNAL_IP has changed
+if [ ${CURRENT_IP} == ${EXTERNAL_IP} ]; then
+    echo "${CURRENT_IP} == ${EXTERNAL_IP}, nothing to do."
 else
-    # Update the A Record of the subdomain using PUT
     curl https://api.gandi.net/v5/livedns/domains/$DOMAIN/records/$SUBDOMAIN \
         --request PUT \
         --header "Authorization: Bearer $API_KEY" \
