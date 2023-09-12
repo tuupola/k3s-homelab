@@ -30,6 +30,7 @@ spec:
           args:
             - --config.file=/etc/prometheus/prometheus.yaml
             - --storage.tsdb.path=/prometheus
+            - --storage.tsdb.retention.time=1y
           # This is only informational and not necessarily needed.
           # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.27/#container-v1-core
           # ports:
