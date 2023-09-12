@@ -1,0 +1,14 @@
+namespace: gandi-dyndns
+resources:
+  - namespace.yaml
+  - cronjob.yaml
+
+configMapGenerator:
+  - name: scripts
+    files:
+      - scripts/gandi.sh
+
+secretGenerator:
+  - name: gandi-config
+    envs:
+      - gandi-config.env
