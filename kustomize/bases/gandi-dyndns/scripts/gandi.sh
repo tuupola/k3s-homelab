@@ -4,12 +4,13 @@ apk add curl jq
 
 CURRENT_IP=$(curl --silent --header "Authorization: Bearer $API_KEY" https://dns.api.gandi.net/api/v5/domains/$DOMAIN/records/$SUBDOMAIN/A | jq -r ".rrset_values[0]")
 EXTERNAL_IP=$(curl --silent ifconfig.io)
+TTL=900
 #EXTERNAL_IP="127.0.0.1"
 
 JSON=$(cat <<EOF
 {
     "items":[
-        {"rrset_type":"A", "rrset_values":["${EXTERNAL_IP}"], "rrset_ttl": 900}
+        {"rrset_type":"A", "rrset_values":["${EXTERNAL_IP}"], "rrset_ttl": ${TTL}}
     ]
 }
 EOF
