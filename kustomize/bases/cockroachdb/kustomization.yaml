@@ -1,0 +1,7 @@
+namespace: cockroachdb
+resources:
+  - namespace.yaml
+  - service.yaml
+  - statefulset.yaml
+  - poddisruptionbudget.yaml
+  #- ingress.yaml
