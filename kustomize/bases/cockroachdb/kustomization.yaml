@@ -1,7 +1,6 @@
 namespace: cockroachdb
 resources:
   - namespace.yaml
-  - cronjob.yaml
   - poddisruptionbudet.yaml
   - rolebinding.yaml
   - role.yaml
