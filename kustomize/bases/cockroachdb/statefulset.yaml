@@ -105,7 +105,8 @@ spec:
       name: datadir
     spec:
       accessModes:
-        - "ReadWriteOnce"
+        - ReadWriteOnce
       resources:
         requests:
-          storage: 100Gi
+          storage: 64Gi
+      storageClassName: local-path
