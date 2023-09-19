@@ -18,6 +18,8 @@ $ kubectl create secret generic cockroachdb.node \
     --from-file=certs \
     --namespace cockroachdb
 
+$ kubectl apply -k .
+
 $ kubectl exec -it cockroachdb-0 --namespace cockroachdb -- /cockroach/cockroach init --certs-dir=/cockroach/cockroach-certs
 
 $ kubectl exec -it cockroachdb-0 --namespace cockroachdb -- ./cockroach sql --certs-dir=/cockroach/cockroach-certs
