@@ -1,4 +1,15 @@
+https://www.cockroachlabs.com/docs/v23.1/deploy-cockroachdb-with-kubernetes?filters=manual
+
 ```
+$ cockroach cert create-ca \
+    --certs-dir=certs \
+    --ca-key=safe/ca.key
+
+$ cockroach cert create-client \
+    root \
+    --certs-dir=certs \
+    --ca-key=safe/ca.key
+
 $ kubectl create secret generic cockroachdb.client.root \
     --from-file=certs \
     --namespace cockroachdb
