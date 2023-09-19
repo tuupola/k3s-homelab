@@ -12,6 +12,11 @@ spec:
     metadata:
       labels:
         app: cockroachdb
+        app.kubernetes.io/name: cockroachdb
+        app.kubernetes.io/component: server
+        app.kubernetes.io/part-of: cockroachdb
+        app.kubernetes.io/instance: cockroachdb
+        app.kubernetes.io/version: v23.1.9
     spec:
       serviceAccountName: cockroachdb
       affinity:

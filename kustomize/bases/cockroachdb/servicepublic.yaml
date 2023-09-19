@@ -6,8 +6,11 @@ metadata:
   name: cockroachdb-public
   labels:
     app: cockroachdb
-  # annotations:
-  #   traefik.ingress.kubernetes.io/service.serversscheme: https
+    app.kubernetes.io/name: cockroachdb
+    app.kubernetes.io/component: server
+    app.kubernetes.io/part-of: cockroachdb
+    app.kubernetes.io/instance: cockroachdb
+    app.kubernetes.io/version: v23.1.9
 spec:
   ports:
   # The main port, served by gRPC, serves Postgres-flavor SQL, internode
