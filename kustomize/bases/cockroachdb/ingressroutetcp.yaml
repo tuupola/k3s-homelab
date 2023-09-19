@@ -1,0 +1,14 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: cockroachdb
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: HostSNI("cockroachdb.internal")
+      services:
+        - name: cockroachdb-public
+          port: 8080
+  tls:
+    passthrough: true

@@ -8,4 +8,4 @@ resources:
   - servicepublic.yaml
   - service.yaml
   - statefulset.yaml
-  - ingress.yaml
+  - ingressroutetcp.yaml
