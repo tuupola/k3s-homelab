@@ -1,0 +1,21 @@
+# $ kubectl apply -k .
+# $ kubectl create -f init.yaml -n cockroachdb
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: cluster-init
+  labels:
+    app: cockroachdb
+spec:
+  template:
+    spec:
+      containers:
+      - name: cluster-init
+        image: cockroachdb/cockroach:v23.1.9
+        imagePullPolicy: IfNotPresent
+        command:
+          - "/cockroach/cockroach"
+          - "init"
+          - "--insecure"
+          - "--host=cockroachdb-0.cockroachdb"
+      restartPolicy: OnFailure
