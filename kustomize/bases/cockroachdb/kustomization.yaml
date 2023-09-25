@@ -1,0 +1,11 @@
+namespace: cockroachdb
+resources:
+  - namespace.yaml
+  - poddisruptionbudet.yaml
+  - rolebinding.yaml
+  - role.yaml
+  - serviceaccount.yaml
+  - servicepublic.yaml
+  - service.yaml
+  - statefulset.yaml
+  - ingressroutetcp.yaml

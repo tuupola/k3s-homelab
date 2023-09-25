@@ -1,0 +1,20 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: cockroachdb
+  labels:
+    app.kubernetes.io/name: cockroachdb
+    app.kubernetes.io/component: server
+    app.kubernetes.io/part-of: cockroachdb
+    app.kubernetes.io/instance: cockroachdb
+    app.kubernetes.io/version: v23.1.9
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: HostSNI("cockroachdb.internal")
+      services:
+        - name: cockroachdb-public
+          port: 8080
+  tls:
+    passthrough: true

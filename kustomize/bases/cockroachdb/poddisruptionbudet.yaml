@@ -1,0 +1,16 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: cockroachdb-budget
+  labels:
+    app: cockroachdb
+    app.kubernetes.io/name: cockroachdb
+    app.kubernetes.io/component: server
+    app.kubernetes.io/part-of: cockroachdb
+    app.kubernetes.io/instance: cockroachdb
+    app.kubernetes.io/version: v23.1.9
+spec:
+  selector:
+    matchLabels:
+      app: cockroachdb
+  maxUnavailable: 1
