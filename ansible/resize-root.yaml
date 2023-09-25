@@ -5,10 +5,10 @@
   name: Resize logical volumes
 
   tasks:
-    - name: Resize root to 64G
+    - name: Resize root to 128G
       community.general.lvol:
         vg: rl
         lv: root
-        size: 64g
+        size: 128g
         resizefs: true
         shrink: false
