@@ -1,6 +1,7 @@
 namespace: airflow
 resources:
   - namespace.yaml
+  - scheduler/deployment.yaml
   - deployment.yaml
   - pvc.yaml
   - service.yaml
