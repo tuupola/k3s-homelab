@@ -1,7 +1,6 @@
 namespace: airflow
 resources:
   - namespace.yaml
-  - scheduler/deployment.yaml
   - deployment.yaml
   - pvc.yaml
   - service.yaml
@@ -11,7 +10,7 @@ resources:
 #     envs:
 #       - database.env
 # configMapGenerator:
-#   - name: airflow
+#   - name: config
 #     files:
-#       - opt/airflow/airflow.cfg
+#      - opt/airflow/airflow.cfg
 #       - opt/airflow/webserver_config.py
