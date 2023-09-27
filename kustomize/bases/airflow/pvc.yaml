@@ -5,7 +5,7 @@ metadata:
   # All of these are not needed by considered a good practice
   labels:
     app.kubernetes.io/name: airflow
-    app.kubernetes.io/component: webserver
+    app.kubernetes.io/component: server
     app.kubernetes.io/part-of: airflow
     app.kubernetes.io/instance: airflow
     app.kubernetes.io/version: "2.6.2"
@@ -14,7 +14,5 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
-  # Use retain to avoid accidental deleting of the data.
-  #storageClassName: longhorn-retain
+      storage: 10Gi
   storageClassName: longhorn
