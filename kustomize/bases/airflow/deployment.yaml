@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/component: server
     app.kubernetes.io/part-of: airflow
     app.kubernetes.io/instance: airflow
-    app.kubernetes.io/version: "2.6.2"
+    app.kubernetes.io/version: "2.7.1"
 spec:
   replicas: 1
   selector:
@@ -23,7 +23,7 @@ spec:
         app.kubernetes.io/component: server
         app.kubernetes.io/part-of: airflow
         app.kubernetes.io/instance: airflow
-        app.kubernetes.io/version: "2.6.2"
+        app.kubernetes.io/version: "2.7.1"
     spec:
       securityContext:
         # https://github.com/apache/airflow/blob/main/Dockerfile#L43C24-L43C24
@@ -31,7 +31,7 @@ spec:
         fsGroup: 0
       initContainers:
         - name: airflow-db-upgrade
-          image: apache/airflow:2.6.2
+          image: apache/airflow:2.7.1
           args:
             - airflow
             - db
@@ -40,7 +40,7 @@ spec:
             - mountPath: /opt/airflow
               name: airflow
         - name: airflow-db-init
-          image: apache/airflow:2.6.2
+          image: apache/airflow:2.7.1
           args:
             - airflow
             - db
@@ -50,7 +50,7 @@ spec:
               name: airflow
       containers:
         - name: webserver
-          image: apache/airflow:2.6.2
+          image: apache/airflow:2.7.1
           args:
             - bash
             - -c
@@ -64,7 +64,7 @@ spec:
             - containerPort: 8080
               name: http
         - name: scheduler
-          image: apache/airflow:2.6.2
+          image: apache/airflow:2.7.1
           args:
             - bash
             - -c
