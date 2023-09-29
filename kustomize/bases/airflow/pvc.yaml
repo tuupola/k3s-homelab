@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/component: server
     app.kubernetes.io/part-of: airflow
     app.kubernetes.io/instance: airflow
-    app.kubernetes.io/version: "2.6.2"
+    app.kubernetes.io/version: "2.7.1"
 spec:
   accessModes:
     - ReadWriteOnce
