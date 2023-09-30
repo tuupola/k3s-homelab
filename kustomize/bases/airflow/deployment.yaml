@@ -31,7 +31,7 @@ spec:
         fsGroup: 0
       initContainers:
         - name: airflow-db-upgrade
-          image: apache/airflow:2.7.1
+          image: andreax79/airflow-code-editor:2.7.0-7.4.1
           args:
             - airflow
             - db
@@ -40,7 +40,7 @@ spec:
             - mountPath: /opt/airflow
               name: airflow
         - name: airflow-db-init
-          image: apache/airflow:2.7.1
+          image: andreax79/airflow-code-editor:2.7.0-7.4.1
           args:
             - airflow
             - db
@@ -48,9 +48,18 @@ spec:
           volumeMounts:
             - mountPath: /opt/airflow
               name: airflow
+        - name: airflow-create-dags-folder
+          image: andreax79/airflow-code-editor:2.7.0-7.4.1
+          args:
+            - bash
+            - -c
+            - exec mkdir /opt/airflow/dags
+          volumeMounts:
+            - mountPath: /opt/airflow
+              name: airflow
       containers:
         - name: webserver
-          image: apache/airflow:2.7.1
+          image: andreax79/airflow-code-editor:2.7.0-7.4.1
           args:
             - bash
             - -c
@@ -58,13 +67,15 @@ spec:
           volumeMounts:
             - name: airflow
               mountPath: /opt/airflow
+            # - name: config
+            #   mountPath: /opt/airflow/config
             # - name: dags
             #   mountPath: /opt/airflow/dags
           ports:
             - containerPort: 8080
               name: http
         - name: scheduler
-          image: apache/airflow:2.7.1
+          image: andreax79/airflow-code-editor:2.7.0-7.4.1
           args:
             - bash
             - -c
