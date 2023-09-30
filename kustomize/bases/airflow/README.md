@@ -7,6 +7,7 @@ CREATE DATABASE airflow;
 CREATE USER airflow WITH PASSWORD 'supersiikret';
 GRANT admin TO airflow;
 
+$ kubectl exec -it -n airflow deployment.apps/airflow -- bash
 $ airflow users create \
     --username admin \
     --firstname Admin \
