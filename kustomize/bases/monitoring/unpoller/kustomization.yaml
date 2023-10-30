@@ -1,0 +1,12 @@
+namespace: monitoring
+resources:
+  - deployment.yaml
+  - service.yaml
+configMapGenerator:
+- name: unpoller-config
+  files:
+    - etc/unpoller/up.yaml
+secretGenerator:
+  - name: unpoller-credentials
+    envs:
+      - unpoller-credentials.env

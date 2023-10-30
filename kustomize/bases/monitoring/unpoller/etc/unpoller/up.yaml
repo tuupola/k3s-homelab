@@ -1,0 +1,37 @@
+# https://github.com/unpoller/unpoller/tree/master/examples
+---
+poller:
+  debug: true
+  quiet: false
+  plugins: []
+
+prometheus:
+  disable: false
+  http_listen:   "0.0.0.0:9130"
+  ssl_cert_path: ""
+  ssl_key_path:  ""
+  report_errors: false
+
+influxdb:
+  disable: true
+
+webserver:
+  enable: false
+
+datadog:
+  enable: false
+
+unifi:
+  dynamic: false
+  defaults:
+    sites:
+      - all
+    timeout: 60s
+    save_ids: false
+    save_events: false
+    save_alarms: false
+    save_anomalies: false
+    save_dpi: false
+    save_sites: true
+    hash_pii: false
+    verify_ssl: false
