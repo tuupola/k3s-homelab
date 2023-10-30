@@ -16,7 +16,7 @@ spec:
         app.kubernetes.io/component: server
         app.kubernetes.io/part-of: cockroachdb
         app.kubernetes.io/instance: cockroachdb
-        app.kubernetes.io/version: v23.1.9
+        app.kubernetes.io/version: v23.1.11
     spec:
       serviceAccountName: cockroachdb
       affinity:
@@ -33,7 +33,7 @@ spec:
                 topologyKey: kubernetes.io/hostname
       containers:
         - name: cockroachdb
-          image: cockroachdb/cockroach:v23.1.9
+          image: cockroachdb/cockroach:v23.1.11
           imagePullPolicy: IfNotPresent
           # TODO: Change these to appropriate values for the hardware that you're running. You can see
           # the resources that can be allocated on each of your Kubernetes nodes by running:
