@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/component: server
     app.kubernetes.io/part-of: cockroachdb
     app.kubernetes.io/instance: cockroachdb
-    app.kubernetes.io/version: v23.1.9
+    app.kubernetes.io/version: v23.1.11
 rules:
   - apiGroups:
       - ""
