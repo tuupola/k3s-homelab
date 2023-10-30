@@ -28,3 +28,9 @@ So copy files instead, for now...
 kubectl cp <some-namespace>/<some-pod>:/tmp/foo /tmp/bar
 kubectl cp opt/airflow/dags/hello.py airflow/airflow-webserver-7847597cb9-898rm:/opt/airflow/dags/hello.py
 ```
+
+After config change
+
+```
+kubectl rollout restart -n airflow deployment.apps/airflow
+```
