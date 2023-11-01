@@ -1,16 +1,20 @@
 namespace: airflow
+
 resources:
   - namespace.yaml
   - deployment.yaml
   - pvc.yaml
   - service.yaml
   - ingress.yaml
-# secretGenerator:
-#   - name: database
-#     envs:
-#       - database.env
+  - postgres/statefulset.yaml
+  - postgres/service.yaml
+
+secretGenerator:
+  - name: config
+    envs:
+      - config.env
 # configMapGenerator:
 #   - name: config
 #     files:
-#      - opt/airflow/airflow.cfg
+#       - opt/airflow/airflow.cfg
 #       - opt/airflow/webserver_config.py
