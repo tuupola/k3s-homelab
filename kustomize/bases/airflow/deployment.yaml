@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/component: server
     app.kubernetes.io/part-of: airflow
     app.kubernetes.io/instance: airflow
-    app.kubernetes.io/version: "2.7.1"
+    app.kubernetes.io/version: "2.7.0"
 spec:
   replicas: 1
   selector:
@@ -23,50 +23,41 @@ spec:
         app.kubernetes.io/component: server
         app.kubernetes.io/part-of: airflow
         app.kubernetes.io/instance: airflow
-        app.kubernetes.io/version: "2.7.1"
+        app.kubernetes.io/version: "2.7.0"
     spec:
       securityContext:
         # https://github.com/apache/airflow/blob/main/Dockerfile#L43C24-L43C24
         runAsUser: 50000
         fsGroup: 0
       initContainers:
-        - name: airflow-db-upgrade
+        - name: airflow-db-migrate
           image: andreax79/airflow-code-editor:2.7.0-7.4.1
+          env:
+            - name: AIRFLOW__DATABASE__SQL_ALCHEMY_CONN
+              value: "postgresql://postgres:example@postgres-public.airflow.svc.cluster.local:5432/airflow?sslmode=prefer"
           args:
             - airflow
             - db
-            - upgrade
-          volumeMounts:
-            - mountPath: /opt/airflow
-              name: airflow
-        - name: airflow-db-init
-          image: andreax79/airflow-code-editor:2.7.0-7.4.1
-          args:
-            - airflow
-            - db
-            - init
-          volumeMounts:
-            - mountPath: /opt/airflow
-              name: airflow
-        - name: airflow-create-dags-folder
-          image: andreax79/airflow-code-editor:2.7.0-7.4.1
-          args:
-            - bash
-            - -c
-            - exec mkdir /opt/airflow/dags
-          volumeMounts:
-            - mountPath: /opt/airflow
-              name: airflow
+            - migrate
       containers:
         - name: webserver
           image: andreax79/airflow-code-editor:2.7.0-7.4.1
+          env:
+            - name: AIRFLOW__DATABASE__SQL_ALCHEMY_CONN
+              value: "postgresql://postgres:example@postgres-public.airflow.svc.cluster.local:5432/airflow?sslmode=prefer"
+            - name: AIRFLOW__WEBSERVER__SESSION_BACKEND
+              value: securecookie
+            - name: AIRFLOW__CORE__EXECUTOR
+              value: LocalExecutor
+            - name: AIRFLOW__CORE__FERNET_KEY
+              value: "SslqIUrL7rAbFGEI7OQDtIsTII4Z4WvwWtn3FOFMCiA="
           args:
             - bash
             - -c
             - exec airflow webserver
           volumeMounts:
             - name: airflow
-              mountPath: /opt/airflow
+              mountPath: /opt/airflow/dags
             # - name: config
             #   mountPath: /opt/airflow/config
             # - name: dags
@@ -76,12 +67,21 @@ spec:
               name: http
         - name: scheduler
           image: andreax79/airflow-code-editor:2.7.0-7.4.1
+          env:
+            - name: AIRFLOW__DATABASE__SQL_ALCHEMY_CONN
+              value: "postgresql://postgres:example@postgres-public.airflow.svc.cluster.local:5432/airflow?sslmode=prefer"
+            - name: AIRFLOW__CORE__FERNET_KEY
+              value: "SslqIUrL7rAbFGEI7OQDtIsTII4Z4WvwWtn3FOFMCiA="
+            # - name: AIRFLOW__WEBSERVER__SESSION_BACKEND
+            #   value: securecookie
+            # - name: AIRFLOW__CORE__EXECUTOR
+            #   value: LocalExecutor
           args:
             - bash
             - -c
             - exec airflow scheduler
           volumeMounts:
-            - mountPath: /opt/airflow
+            - mountPath: /opt/airflow/dags
               name: airflow
       volumes:
         - name: airflow
