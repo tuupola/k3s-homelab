@@ -11,6 +11,9 @@ metadata:
     app.kubernetes.io/version: "2.7.0"
 spec:
   replicas: 1
+  strategy:
+    # Avoid deadlock with the DAG volume
+    type: Recreate
   selector:
     matchLabels:
       app.kubernetes.io/name: airflow
