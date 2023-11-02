@@ -33,6 +33,12 @@ spec:
           securityContext:
             runAsUser: 70
           env:
+            # These are created automagically
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: config
+                  key: POSTGRES_USER
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
