@@ -37,7 +37,10 @@ spec:
           image: andreax79/airflow-code-editor:2.7.0-7.4.1
           env:
             - name: AIRFLOW__DATABASE__SQL_ALCHEMY_CONN
-              value: "postgresql://postgres:example@postgres-public.airflow.svc.cluster.local:5432/airflow?sslmode=prefer"
+              valueFrom:
+                secretKeyRef:
+                  name: config
+                  key: AIRFLOW__DATABASE__SQL_ALCHEMY_CONN
           args:
             - airflow
             - db
@@ -47,9 +50,15 @@ spec:
           image: andreax79/airflow-code-editor:2.7.0-7.4.1
           env:
             - name: AIRFLOW__DATABASE__SQL_ALCHEMY_CONN
-              value: "postgresql://postgres:example@postgres-public.airflow.svc.cluster.local:5432/airflow?sslmode=prefer"
+              valueFrom:
+                secretKeyRef:
+                  name: config
+                  key: AIRFLOW__DATABASE__SQL_ALCHEMY_CONN
             - name: AIRFLOW__CORE__FERNET_KEY
-              value: "SslqIUrL7rAbFGEI7OQDtIsTII4Z4WvwWtn3FOFMCiA="
+              valueFrom:
+                secretKeyRef:
+                  name: config
+                  key: AIRFLOW__CORE__FERNET_KEY
             - name: AIRFLOW__CORE__EXECUTOR
               value: LocalExecutor
           args:
@@ -70,9 +79,15 @@ spec:
           image: andreax79/airflow-code-editor:2.7.0-7.4.1
           env:
             - name: AIRFLOW__DATABASE__SQL_ALCHEMY_CONN
-              value: "postgresql://postgres:example@postgres-public.airflow.svc.cluster.local:5432/airflow?sslmode=prefer"
+              valueFrom:
+                secretKeyRef:
+                  name: config
+                  key: AIRFLOW__DATABASE__SQL_ALCHEMY_CONN
             - name: AIRFLOW__CORE__FERNET_KEY
-              value: "SslqIUrL7rAbFGEI7OQDtIsTII4Z4WvwWtn3FOFMCiA="
+              valueFrom:
+                secretKeyRef:
+                  name: config
+                  key: AIRFLOW__CORE__FERNET_KEY
             - name: AIRFLOW__CORE__EXECUTOR
               value: LocalExecutor
           args:
