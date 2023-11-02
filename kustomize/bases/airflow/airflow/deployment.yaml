@@ -68,10 +68,6 @@ spec:
           volumeMounts:
             - name: airflow
               mountPath: /opt/airflow/dags
-            # - name: config
-            #   mountPath: /opt/airflow/config
-            # - name: dags
-            #   mountPath: /opt/airflow/dags
           ports:
             - containerPort: 8080
               name: http
@@ -101,9 +97,3 @@ spec:
         - name: airflow
           persistentVolumeClaim:
             claimName: airflow
-        # - name: dags
-        #   configMap:
-        #     name: dags
-        # - name: config
-        #   configMap:
-        #     name: config
