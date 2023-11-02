@@ -45,12 +45,10 @@ spec:
           env:
             - name: AIRFLOW__DATABASE__SQL_ALCHEMY_CONN
               value: "postgresql://postgres:example@postgres-public.airflow.svc.cluster.local:5432/airflow?sslmode=prefer"
-            - name: AIRFLOW__WEBSERVER__SESSION_BACKEND
-              value: securecookie
-            - name: AIRFLOW__CORE__EXECUTOR
-              value: LocalExecutor
             - name: AIRFLOW__CORE__FERNET_KEY
               value: "SslqIUrL7rAbFGEI7OQDtIsTII4Z4WvwWtn3FOFMCiA="
+            - name: AIRFLOW__CORE__EXECUTOR
+              value: LocalExecutor
           args:
             - bash
             - -c
@@ -72,10 +70,8 @@ spec:
               value: "postgresql://postgres:example@postgres-public.airflow.svc.cluster.local:5432/airflow?sslmode=prefer"
             - name: AIRFLOW__CORE__FERNET_KEY
               value: "SslqIUrL7rAbFGEI7OQDtIsTII4Z4WvwWtn3FOFMCiA="
-            # - name: AIRFLOW__WEBSERVER__SESSION_BACKEND
-            #   value: securecookie
-            # - name: AIRFLOW__CORE__EXECUTOR
-            #   value: LocalExecutor
+            - name: AIRFLOW__CORE__EXECUTOR
+              value: LocalExecutor
           args:
             - bash
             - -c
