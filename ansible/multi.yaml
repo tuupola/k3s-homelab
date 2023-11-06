@@ -13,5 +13,8 @@
     #k3s_state: uninstalled
     k3s_server:
       write-kubeconfig-mode: "0644"
+      # MetalLB requires disabling the default load balancer
+      disable:
+          - servicelb
   roles:
     - role: xanmanning.k3s
