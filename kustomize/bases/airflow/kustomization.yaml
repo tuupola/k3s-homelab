@@ -2,10 +2,10 @@ namespace: airflow
 
 resources:
   - namespace.yaml
-  - airflow/deployment.yaml
-  - airflow/pvc.yaml
-  - airflow/service.yaml
-  - airflow/ingress.yaml
+  - deployment.yaml
+  - pvc.yaml
+  - service.yaml
+  - ingress.yaml
   - postgres/statefulset.yaml
   - postgres/service.yaml
 
