@@ -1,11 +1,9 @@
 
 ```
 $ kubectl apply -k .
-$ kubectl exec -it cockroachdb-0 --namespace cockroachdb -- ./cockroach sql --certs-dir=/cockroach/cockroach-certs
 
-CREATE DATABASE airflow;
-CREATE USER airflow WITH PASSWORD 'supersiikret';
-GRANT admin TO airflow;
+$ kubectl exec -it -n airflow postgres-0 -- bash
+$ psql
 
 $ kubectl exec -it -n airflow deployment.apps/airflow -- bash
 $ airflow users create \
@@ -14,6 +12,10 @@ $ airflow users create \
     --lastname User \
     --role Admin \
     --email admin@example.org
+```
+
+```
+ kubectl --namespace airflow port-forward service/airflow 8080:8080
 ```
 
 Cannot add dags via configMapGenerator because:
@@ -34,3 +36,8 @@ After config change
 ```
 kubectl rollout restart -n airflow deployment.apps/airflow
 ```
+
+docker build . -f Dockerfile --pull --tag tuupola/airflow-crdb:2.7.1-202310041420
+docker build . --pull --tag tuupola/airflow-crdb:2.7.1-202310041420
+
+date +"%Y%m%d%H%M"
