@@ -1,0 +1,86 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+  namespace: airflow
+  labels:
+    app.kubernetes.io/name: postgres
+    app.kubernetes.io/instance: postgres-airflow
+    app.kubernetes.io/version: "16.0"
+    app.kubernetes.io/component: database
+    app.kubernetes.io/part-of: airflow
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: postgres
+      app.kubernetes.io/instance: postgres-airflow
+      app.kubernetes.io/component: database
+  template:
+    metadata:
+      name: postgres
+      labels:
+        app.kubernetes.io/name: postgres
+        app.kubernetes.io/instance: postgres-airflow
+        app.kubernetes.io/version: "16.0"
+        app.kubernetes.io/component: database
+        app.kubernetes.io/part-of: airflow
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:16.0-alpine
+          securityContext:
+            runAsUser: 70
+          env:
+            # These are created automagically
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: config
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: config
+                  key: POSTGRES_PASSWORD
+            - name: POSTGRES_DB
+              value: airflow
+          # livenessProbe:
+          #   initialDelaySeconds: 30
+          #   timeoutSeconds: 5
+          #   failureThreshold: 6
+          #   exec:
+          #     command:
+          #       - /bin/sh
+          #       - -c
+          #       - exec pg_isready -U "postgres" -h 127.0.0.1 -p 5432
+          readinessProbe:
+            initialDelaySeconds: 5
+            timeoutSeconds: 5
+            failureThreshold: 6
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - exec pg_isready -U "postgres" -h 127.0.0.1 -p 5432
+          resources:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+            limits:
+              cpu: 1000m
+              memory: 1024Mi
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: "8Gi"
+        storageClassName: longhorn-retain
