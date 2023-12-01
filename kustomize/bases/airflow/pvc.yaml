@@ -1,13 +1,33 @@
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: airflow
+  name: dags
   # All of these are not needed by considered a good practice
   labels:
-    app.kubernetes.io/name: airflow
-    app.kubernetes.io/component: server
+    app.kubernetes.io/name: dags
+    app.kubernetes.io/component: volume
     app.kubernetes.io/part-of: airflow
-    app.kubernetes.io/instance: airflow
+    app.kubernetes.io/instance: airflow-dags
+    app.kubernetes.io/version: "2.7.1"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: longhorn
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: logs
+  # All of these are not needed by considered a good practice
+  labels:
+    app.kubernetes.io/name: logs
+    app.kubernetes.io/component: volume
+    app.kubernetes.io/part-of: airflow
+    app.kubernetes.io/instance: airflow-logs
     app.kubernetes.io/version: "2.7.1"
 spec:
   accessModes:

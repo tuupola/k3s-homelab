@@ -66,8 +66,10 @@ spec:
             - -c
             - exec airflow webserver
           volumeMounts:
-            - name: airflow
-              mountPath: /opt/airflow/dags
+            - mountPath: /opt/airflow/dags
+              name: dags
+            - mountPath: /opt/airflow/logs
+              name: logs
           ports:
             - containerPort: 8080
               name: http
@@ -92,8 +94,13 @@ spec:
             - exec airflow scheduler
           volumeMounts:
             - mountPath: /opt/airflow/dags
-              name: airflow
+              name: dags
+            - mountPath: /opt/airflow/logs
+              name: logs
       volumes:
-        - name: airflow
+        - name: dags
           persistentVolumeClaim:
-            claimName: airflow
+            claimName: dags
+        - name: logs
+          persistentVolumeClaim:
+            claimName: logs
