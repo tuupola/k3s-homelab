@@ -1,4 +1,7 @@
+namespace: kube-system
 resources:
   - service.yaml
   - ingress.yaml
   - helmchartconfig.yaml
+  - tlsstore.yaml
+# Kustomize does not handle TLSStore. Create secrets manually instead.
