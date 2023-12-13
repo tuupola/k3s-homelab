@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/component: application
     app.kubernetes.io/part-of: ghostfolio
     app.kubernetes.io/instance: ghostfolio
-    app.kubernetes.io/version: "2.28.0"
+    app.kubernetes.io/version: "2.30.0"
   annotations:
     # Use only 80 and 443 entrypoint
     traefik.ingress.kubernetes.io/router.entrypoints: web, websecure
