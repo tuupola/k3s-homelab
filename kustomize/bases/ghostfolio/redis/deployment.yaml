@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  #namespace: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: redis
+      app.kubernetes.io/component: cache
+      app.kubernetes.io/instance: ghostfolio-redis
+  template:
+    metadata:
+      # These are not needed by considered a good practice
+      labels:
+        app.kubernetes.io/name: redis
+        app.kubernetes.io/component: cache
+        app.kubernetes.io/part-of: ghostfolio
+        app.kubernetes.io/instance: ghostfolio-redis
+        app.kubernetes.io/version: "7.2.3"
+    spec:
+      containers:
+        - name: redis
+          image: redis:7.2.3-alpine
+          args: ["--appendonly", "yes"]
+          ports:
+            - name: redis
+              containerPort: 6379
+          env:
+            - name: ALLOW_EMPTY_PASSWORD
+              value: "yes"
