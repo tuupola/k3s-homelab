@@ -31,10 +31,10 @@ metadata:
   # the Ḱubernetes way of using things.
   name: postgres-public
   labels:
-    app.kubernetes.io/name: postgres-public
+    app.kubernetes.io/name: postgres
     app.kubernetes.io/component: database
     app.kubernetes.io/part-of: ghostfolio
-    app.kubernetes.io/instance: ghostfolio-postgres-public
+    app.kubernetes.io/instance: ghostfolio-postgres
     app.kubernetes.io/version: "15.0"
 spec:
   type: ClusterIP
