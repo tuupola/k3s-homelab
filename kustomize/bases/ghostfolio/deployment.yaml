@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ghostfolio
+  # These are not needed by considered a good practice
+  labels:
+    app.kubernetes.io/name: ghostfolio
+    app.kubernetes.io/component: application
+    app.kubernetes.io/part-of: ghostfolio
+    app.kubernetes.io/instance: ghostfolio
+    app.kubernetes.io/version: "2.30.0"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ghostfolio
+      app.kubernetes.io/component: application
+      app.kubernetes.io/instance: ghostfolio
+  template:
+    metadata:
+      # These are not needed by considered a good practice
+      labels:
+        app.kubernetes.io/name: ghostfolio
+        app.kubernetes.io/component: application
+        app.kubernetes.io/part-of: ghostfolio
+        app.kubernetes.io/instance: ghostfolio
+        app.kubernetes.io/version: "2.30.0"
+    spec:
+      containers:
+        - name: ghostfolio
+          image: ghostfolio/ghostfolio:2.30.0
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: config
+                  key: DATABASE_URL
+            - name: JWT_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: config
+                  key: JWT_SECRET_KEY
+            - name: ACCESS_TOKEN_SALT
+              valueFrom:
+                secretKeyRef:
+                  name: config
+                  key: ACCESS_TOKEN_SALT
+            - name: REDIS_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: config
+                  key: REDIS_HOST
+            - name: REDIS_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: config
+                  key: REDIS_PORT
