@@ -1,7 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: redis
+  name: redis-public
+  labels:
+    app.kubernetes.io/name: redis-public
+    app.kubernetes.io/component: cache
+    app.kubernetes.io/part-of: ghostfolio
+    app.kubernetes.io/instance: ghostfolio-redis-public
+    app.kubernetes.io/version: "7.2.3"
 spec:
   type: ClusterIP
   selector:
