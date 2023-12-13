@@ -29,9 +29,6 @@ spec:
       containers:
         - name: ghostfolio
           image: ghostfolio/ghostfolio:2.28.0
-          # volumeMounts:
-          #   - mountPath: /etc/ghostfolio/data
-          #     name: ghostfolio
           env:
             - name: DATABASE_URL
               valueFrom:
@@ -58,7 +55,3 @@ spec:
                 secretKeyRef:
                   name: config
                   key: REDIS_PORT
-      # volumes:
-      #   - name: ghostfolio
-      #     persistentVolumeClaim:
-      #       claimName: ghostfolio
