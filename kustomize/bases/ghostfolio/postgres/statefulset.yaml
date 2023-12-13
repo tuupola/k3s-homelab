@@ -46,15 +46,15 @@ spec:
                 secretKeyRef:
                   name: config
                   key: POSTGRES_DB
-          # livenessProbe:
-          #   initialDelaySeconds: 30
-          #   timeoutSeconds: 5
-          #   failureThreshold: 6
-          #   exec:
-          #     command:
-          #       - /bin/sh
-          #       - -c
-          #       - exec pg_isready -U "postgres" -h 127.0.0.1 -p 5432
+          livenessProbe:
+            initialDelaySeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 6
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - exec pg_isready -U "postgres" -h 127.0.0.1 -p 5432
           readinessProbe:
             initialDelaySeconds: 5
             timeoutSeconds: 5
