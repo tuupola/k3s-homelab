@@ -26,9 +26,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: postgres:15.0-alpine
-          securityContext:
-            runAsUser: 70
+          image: postgres:15.0
           env:
             # These are created automagically
             - name: POSTGRES_USER
