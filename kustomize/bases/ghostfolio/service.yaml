@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/component: application
     app.kubernetes.io/part-of: ghostfolio
     app.kubernetes.io/instance: ghostfolio
-    app.kubernetes.io/version: "2.36.0"
+    app.kubernetes.io/version: "2.48.0"
 spec:
   type: ClusterIP
   ports:
