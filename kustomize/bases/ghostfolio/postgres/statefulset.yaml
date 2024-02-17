@@ -16,7 +16,7 @@ spec:
   template:
     metadata:
       name: postgres
-      # These are not needed by considered a good practice
+      # These are not needed but considered a good practice
       labels:
         app.kubernetes.io/name: postgres
         app.kubernetes.io/component: database
