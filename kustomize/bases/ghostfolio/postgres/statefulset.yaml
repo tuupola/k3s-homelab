@@ -16,7 +16,7 @@ spec:
   template:
     metadata:
       name: postgres
-      # These are not needed by considered a good practice
+      # These are not needed but considered a good practice
       labels:
         app.kubernetes.io/name: postgres
         app.kubernetes.io/component: database
@@ -24,10 +24,16 @@ spec:
         app.kubernetes.io/instance: ghostfolio-postgres
         app.kubernetes.io/version: "15.0"
     spec:
+      securityContext:
+        runAsUser: 70
+        runAsGroup: 70
+        fsGroup: 70
       containers:
         - name: postgres
-          image: postgres:15.0
+          image: postgres:15.0-alpine
           env:
+            - name: PGDATA
+              value: /postgresql/data
             # These are created automagically
             - name: POSTGRES_USER
               valueFrom:
@@ -71,7 +77,7 @@ spec:
               memory: 1024Mi
           volumeMounts:
             - name: data
-              mountPath: /var/lib/postgresql
+              mountPath: /postgresql
   volumeClaimTemplates:
     - metadata:
         name: data
