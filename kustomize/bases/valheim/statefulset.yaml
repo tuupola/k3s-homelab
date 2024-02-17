@@ -30,6 +30,11 @@ spec:
         - name: valheim
           image: cm2network/valheim:latest
           env:
+            - name: SERVER_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: config
+                  key: SERVER_NAME
             - name: SERVER_PW
               valueFrom:
                 secretKeyRef:
