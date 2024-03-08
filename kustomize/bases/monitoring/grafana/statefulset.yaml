@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/component: server
     app.kubernetes.io/part-of: grafana
     app.kubernetes.io/instance: monitoring
-    app.kubernetes.io/version: "10.0.3"
+    app.kubernetes.io/version: "10.4.0"
   name: grafana
 spec:
   replicas: 1
@@ -22,11 +22,11 @@ spec:
         app.kubernetes.io/component: server
         app.kubernetes.io/part-of: grafana
         app.kubernetes.io/instance: monitoring
-        app.kubernetes.io/version: "10.0.3"
+        app.kubernetes.io/version: "10.4.0"
     spec:
       containers:
         - name: grafana
-          image: grafana/grafana-oss:10.0.3
+          image: grafana/grafana-oss:10.4.0
           # This is only informational and not necessarily needed.
           # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.27/#container-v1-core
           # ports:
