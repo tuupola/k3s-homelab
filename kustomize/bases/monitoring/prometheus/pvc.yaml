@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/component: server
     app.kubernetes.io/part-of: prometheus
     app.kubernetes.io/instance: monitoring
-    app.kubernetes.io/version: v2.46.0
+    app.kubernetes.io/version: v2.50.1
 spec:
   accessModes:
     - ReadWriteOnce
