@@ -4,4 +4,11 @@ resources:
   - ingress.yaml
   - helmchartconfig.yaml
   - tlsstore.yaml
-# Kustomize does not handle TLSStore. Create secrets manually instead.
+secretGenerator:
+  - name: default-cert
+    files:
+      - tls.crt
+      - tls.key
+# Kustomize does not handle hashing with TLSStore.
+generatorOptions:
+  disableNameSuffixHash: true
