@@ -50,15 +50,14 @@ spec:
           effect: "NoSchedule"
           operator: "Equal"
       containers:
-      - image: rancher/rancher:v2.7.5
+      - image: rancher/rancher:v2.7.10
         imagePullPolicy: IfNotPresent
         name: rancher
         ports:
         - containerPort: 80
           protocol: TCP
         args:
-        # Public trusted CA - clear ca certs
-        - "--no-cacerts"
+        # Private CA - don't clear ca certs
         - "--http-listen-port=80"
         - "--https-listen-port=443"
         - "--add-local=true"
@@ -87,4 +86,13 @@ spec:
         resources:
           {}
         volumeMounts:
+        # Pass CA cert into rancher for private CA
+        - mountPath: /etc/rancher/ssl/cacerts.pem
+          name: tls-ca-volume
+          subPath: cacerts.pem
+          readOnly: true
       volumes:
+      - name: tls-ca-volume
+        secret:
+          defaultMode: 0400
+          secretName: tls-ca
