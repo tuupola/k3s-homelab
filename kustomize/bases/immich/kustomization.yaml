@@ -1,0 +1,15 @@
+namespace: immich
+resources:
+  - namespace.yaml
+  - pvc.yaml
+  - ingress.yaml
+  - deployment.yaml
+  - service.yaml
+
+  - redis/
+  #- postgres/
+
+# secretGenerator:
+#   - name: config
+#     envs:
+#       - config.env

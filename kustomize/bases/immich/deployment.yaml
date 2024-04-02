@@ -1,0 +1,221 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server
+  labels:
+    app.kubernetes.io/name: server
+    app.kubernetes.io/component: server
+    app.kubernetes.io/part-of: immich
+    app.kubernetes.io/instance: immich-server
+    app.kubernetes.io/version: v1.100.0
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: server
+      app.kubernetes.io/instance: immich-server
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: server
+        app.kubernetes.io/component: server
+        app.kubernetes.io/part-of: immich
+        app.kubernetes.io/instance: immich-server
+        app.kubernetes.io/version: v1.100.0
+    spec:
+      containers:
+        - name: server
+          image: ghcr.io/immich-app/immich-server:v1.100.0
+          imagePullPolicy: IfNotPresent
+          command:
+            - "/bin/sh"
+          args:
+            - ./start-server.sh
+          env:
+            - name: DB_DATABASE_NAME
+              value: immich
+            - name: DB_HOSTNAME
+              value: postgres.immich.svc.cluster.local
+            - name: DB_PASSWORD
+              value: aW1taWNo
+            - name: DB_USERNAME
+              value: immich
+            # These are settings for the machine learning Pod
+            # - name: MACHINE_LEARNING_HOST
+            #   value: 0.0.0.0
+            - name: MACHINE_LEARNING_PORT
+              value: "3003"
+            # This is the url for accessing the machine learning service
+            - name: IMMICH_MACHINE_LEARNING_URL
+              value: http://machine-learning:3003
+            - name: REDIS_HOSTNAME
+              value: redis.immich.svc.cluster.local
+            - name: REDIS_PORT
+              value: "6379"
+          # This is only for documentation purposes and does not affect anything.
+          # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.27/#container-v1-core
+          # ports:
+          #   - containerPort: 3001
+          volumeMounts:
+            - name: library
+              mountPath: /usr/src/app/upload
+            - mountPath: /originals
+              name: originals
+          livenessProbe:
+            httpGet:
+              path: /server-info/ping
+              port: 3001
+          readinessProbe:
+            httpGet:
+              path: /server-info/ping
+              port: 3001
+      volumes:
+        - name: library
+          persistentVolumeClaim:
+            claimName: storage
+        - name: originals
+          nfs:
+            path: /srv/nfs/usb/photos
+            readOnly: true
+            server: nuc-01.internal
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: machine-learning
+  labels:
+    app.kubernetes.io/name: machine-learning
+    app.kubernetes.io/component: machine-learning
+    app.kubernetes.io/part-of: immich
+    app.kubernetes.io/instance: immich-machine-learning
+    app.kubernetes.io/version: v1.100.0
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: machine-learning
+      app.kubernetes.io/instance: immich-machine-learning
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: machine-learning
+        app.kubernetes.io/component: machine-learning
+        app.kubernetes.io/part-of: immich
+        app.kubernetes.io/instance: immich-machine-learning
+        app.kubernetes.io/version: v1.100.0
+    spec:
+      containers:
+        - name: machine-learning
+          image: ghcr.io/immich-app/immich-machine-learning:v1.100.0
+          env:
+            - name: DB_DATABASE_NAME
+              value: immich
+            - name: DB_HOSTNAME
+              value: immich-postgresql-hl.immich.svc.cluster.local
+            - name: DB_PASSWORD
+              value: aW1taWNo
+            - name: DB_USERNAME
+              value: immich
+            # These are settings for the machine learning Pod
+            # - name: MACHINE_LEARNING_HOST
+            #   value: 0.0.0.0
+            - name: MACHINE_LEARNING_PORT
+              value: "3003"
+            # This is the url for accessing the machine learning service
+            - name: IMMICH_MACHINE_LEARNING_URL
+              value: http://machine-learning:3003
+            - name: REDIS_HOSTNAME
+              value: redis.immich.svc.cluster.local
+            - name: REDIS_PORT
+              value: "6379"
+            - name: TRANSFORMERS_CACHE
+              value: /cache
+          # ports:
+          #   - name: http
+          #     containerPort: 3003
+          volumeMounts:
+            - name: cache
+              mountPath: /cache
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: 3003
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: 3003
+      volumes:
+        - name: cache
+          emptyDir:
+            {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microservices
+  labels:
+    app.kubernetes.io/name: microservices
+    app.kubernetes.io/component: microservices
+    app.kubernetes.io/part-of: immich
+    app.kubernetes.io/instance: immich-microservices
+    app.kubernetes.io/version: v1.100.0
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: microservices
+      app.kubernetes.io/instance: immich-microservices
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: microservices
+        app.kubernetes.io/component: microservices
+        app.kubernetes.io/part-of: immich
+        app.kubernetes.io/instance: immich-microservices
+        app.kubernetes.io/version: v1.100.0
+    spec:
+      containers:
+        - name: microservices
+          image: ghcr.io/immich-app/immich-server:v1.100.0
+          imagePullPolicy: IfNotPresent
+          command:
+            - "/bin/sh"
+          args:
+            - ./start-microservices.sh
+          env:
+            - name: DB_DATABASE_NAME
+              value: immich
+            - name: DB_HOSTNAME
+              value: postgres.immich.svc.cluster.local
+            - name: DB_PASSWORD
+              value: aW1taWNo
+            - name: DB_USERNAME
+              value: immich
+            # These are settings for the machine learning Pod
+            # - name: MACHINE_LEARNING_HOST
+            #   value: 0.0.0.0
+            - name: MACHINE_LEARNING_PORT
+              value: "3003"
+            # This is the url for accessing the machine learning service
+            - name: IMMICH_MACHINE_LEARNING_URL
+              value: http://machine-learning:3003
+            - name: REDIS_HOSTNAME
+              value: redis.immich.svc.cluster.local
+            - name: REDIS_PORT
+              value: "6379"
+          volumeMounts:
+            - name: library
+              mountPath: /usr/src/app/upload
+            - mountPath: /originals
+              name: originals
+      volumes:
+        - name: library
+          persistentVolumeClaim:
+            claimName: storage
+        # Existing library shared via nfs
+        - name: originals
+          nfs:
+            path: /srv/nfs/usb/photos
+            readOnly: true
+            server: nuc-01.internal

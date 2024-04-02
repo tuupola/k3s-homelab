@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: immich
+  # These are not needed by considered a good practice
+  labels:
+    app.kubernetes.io/name: immich
+    app.kubernetes.io/component: server
+    app.kubernetes.io/part-of: immich
+    app.kubernetes.io/instance: immich-server
+    app.kubernetes.io/version: v1.100.0
+  annotations:
+    # Use only 80 and 443 entrypoint
+    traefik.ingress.kubernetes.io/router.entrypoints: web, websecure
+spec:
+  rules:
+    - host: immich.internal
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: server
+                port:
+                  number: 3001
