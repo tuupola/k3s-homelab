@@ -1,0 +1,4 @@
+namespace: immich
+resources:
+  - service.yaml
+  - deployment.yaml
