@@ -1,0 +1,9 @@
+namespace: immich
+resources:
+  - service.yaml
+  - statefulset.yaml
+
+configMapGenerator:
+- name: init-script
+  files:
+    - init.sql
