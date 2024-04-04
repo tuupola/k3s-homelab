@@ -1,0 +1,120 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+  labels:
+    app.kubernetes.io/name: postgres
+    app.kubernetes.io/component: database
+    app.kubernetes.io/part-of: immich
+    app.kubernetes.io/instance: immich-postgres
+    app.kubernetes.io/version: "16.1.0"
+spec:
+  replicas: 1
+  serviceName: postgres-headless
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: postgres
+      app.kubernetes.io/instance: immich-postgres
+  template:
+    metadata:
+      name: postgres
+      labels:
+        app.kubernetes.io/name: postgres
+        app.kubernetes.io/component: database
+        app.kubernetes.io/part-of: immich
+        app.kubernetes.io/instance: immich-postgres
+        app.kubernetes.io/version: "16.1.0"
+    spec:
+      securityContext:
+        fsGroup: 1001
+      containers:
+        - name: postgres
+          image: docker.io/tensorchord/pgvecto-rs:pg14-v0.2.0
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            privileged: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: true
+            runAsUser: 1001
+            seccompProfile:
+              type: RuntimeDefault
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: config
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: config
+                  key: POSTGRES_PASSWORD
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: config
+                  key: POSTGRES_DB
+            # These should be defaults, but postgres cannot initialize without?
+            - name: POSTGRES_VOLUME_DIR
+              value: "/bitnami/postgresql"
+            - name: PGDATA
+              value: "/bitnami/postgresql/data"
+          # ports:
+          #   - containerPort: 5432
+          livenessProbe:
+            failureThreshold: 6
+            initialDelaySeconds: 30
+            timeoutSeconds: 5
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - exec pg_isready -U "immich" -d "dbname=immich" -h 127.0.0.1 -p 5432
+          readinessProbe:
+            failureThreshold: 6
+            initialDelaySeconds: 5
+            timeoutSeconds: 5
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - -e
+                - exec pg_isready -U "immich" -d "dbname=immich" -h 127.0.0.1 -p 5432
+          resources:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+            limits:
+              cpu: 2048m
+              memory: 512Mi
+          volumeMounts:
+            - name: init-script
+              mountPath: /docker-entrypoint-initdb.d/
+            - name: shm
+              mountPath: /dev/shm
+            - name: data
+              mountPath: /bitnami/postgresql
+      volumes:
+        - name: init-script
+          configMap:
+            name: init-script
+        # Workaround for shm size limitations.
+        - name: shm
+          emptyDir:
+            medium: Memory
+  volumeClaimTemplates:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: data
+      spec:
+        accessModes:
+          - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: "16Gi"
+        storageClassName: longhorn-retain
