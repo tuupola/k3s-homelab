@@ -58,7 +58,7 @@ spec:
                 secretKeyRef:
                   name: config
                   key: POSTGRES_DB
-            # These should be defauts, but postgres cannot initialise without?
+            # These should be defaults, but postgres cannot initialize without?
             - name: POSTGRES_VOLUME_DIR
               value: "/bitnami/postgresql"
             - name: PGDATA
