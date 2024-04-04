@@ -9,3 +9,10 @@ resources:
   - templates/secret.yaml
   - templates/service.yaml
   - templates/serviceAccount.yaml
+secretGenerator:
+  # $ cp ../traefik/cacert.crt cacerts.pem
+  - name: tls-ca
+    files:
+      - cacerts.pem
+generatorOptions:
+  disableNameSuffixHash: true
