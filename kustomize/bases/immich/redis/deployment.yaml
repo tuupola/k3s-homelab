@@ -2,6 +2,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: redis
+  labels:
+    app.kubernetes.io/name: redis
+    app.kubernetes.io/component: cache
+    app.kubernetes.io/part-of: immich
+    app.kubernetes.io/instance: immich-redis
+    app.kubernetes.io/version: "7.2.3"
 spec:
   replicas: 1
   selector:
