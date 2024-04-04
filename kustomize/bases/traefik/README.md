@@ -1,7 +1,7 @@
 
 # Self-issued certificate
 
-To avoid constantly approving Traefik generated certs you can define a [default certificate](https://doc.traefik.io/traefik/routing/providers/kubernetes-crd/#kind-tlsstore) using a TLSStore. Kustomize does not handle TLSStores so you need to create the secret manually.
+To avoid constantly approving Traefik generated certs you can define a [default certificate](https://doc.traefik.io/traefik/routing/providers/kubernetes-crd/#kind-tlsstore) using a TLSStore.
 
 ## Create a self-issued root CA certificate
 
