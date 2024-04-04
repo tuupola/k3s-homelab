@@ -73,6 +73,13 @@ spec:
               mountPath: /usr/src/app/upload
             - mountPath: /external
               name: external
+          resources:
+            requests:
+              cpu: 500m
+              memory: 256Mi
+            limits:
+              cpu: 2000m
+              memory: 1Gi
           livenessProbe:
             httpGet:
               path: /server-info/ping
@@ -159,6 +166,13 @@ spec:
           volumeMounts:
             - name: cache
               mountPath: /cache
+          resources:
+            requests:
+              cpu: 500m
+              memory: 256Mi
+            limits:
+              cpu: 4000m
+              memory: 1Gi
           livenessProbe:
             httpGet:
               path: /ping
@@ -237,6 +251,13 @@ spec:
               value: redis.immich
             - name: REDIS_PORT
               value: "6379"
+          resources:
+            requests:
+              cpu: 500m
+              memory: 256Mi
+            limits:
+              cpu: 2000m
+              memory: 1Gi
           volumeMounts:
             - name: library
               mountPath: /usr/src/app/upload
