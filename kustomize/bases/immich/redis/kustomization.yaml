@@ -1,3 +1,4 @@
+---
 namespace: immich
 resources:
   - service.yaml
