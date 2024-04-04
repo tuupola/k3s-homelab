@@ -33,14 +33,25 @@ spec:
           args:
             - ./start-server.sh
           env:
-            - name: DB_DATABASE_NAME
-              value: immich
+            - name: LOG_LEVEL
+              value: verbose
             - name: DB_HOSTNAME
               value: postgres.immich.svc.cluster.local
+            - name: DB_DATABASE_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: config
+                  key: POSTGRES_DB
             - name: DB_PASSWORD
-              value: aW1taWNo
+              valueFrom:
+                secretKeyRef:
+                  name: config
+                  key: POSTGRES_PASSWORD
             - name: DB_USERNAME
-              value: immich
+              valueFrom:
+                secretKeyRef:
+                  name: config
+                  key: POSTGRES_USER
             # These are settings for the machine learning Pod
             # - name: MACHINE_LEARNING_HOST
             #   value: 0.0.0.0
@@ -109,14 +120,25 @@ spec:
         - name: machine-learning
           image: ghcr.io/immich-app/immich-machine-learning:v1.100.0
           env:
-            - name: DB_DATABASE_NAME
-              value: immich
+            - name: LOG_LEVEL
+              value: verbose
             - name: DB_HOSTNAME
-              value: immich-postgresql-hl.immich.svc.cluster.local
+              value: postgres.immich.svc.cluster.local
+            - name: DB_DATABASE_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: config
+                  key: POSTGRES_DB
             - name: DB_PASSWORD
-              value: aW1taWNo
+              valueFrom:
+                secretKeyRef:
+                  name: config
+                  key: POSTGRES_PASSWORD
             - name: DB_USERNAME
-              value: immich
+              valueFrom:
+                secretKeyRef:
+                  name: config
+                  key: POSTGRES_USER
             # These are settings for the machine learning Pod
             # - name: MACHINE_LEARNING_HOST
             #   value: 0.0.0.0
@@ -184,14 +206,25 @@ spec:
           args:
             - ./start-microservices.sh
           env:
-            - name: DB_DATABASE_NAME
-              value: immich
+            - name: LOG_LEVEL
+              value: verbose
             - name: DB_HOSTNAME
               value: postgres.immich.svc.cluster.local
+            - name: DB_DATABASE_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: config
+                  key: POSTGRES_DB
             - name: DB_PASSWORD
-              value: aW1taWNo
+              valueFrom:
+                secretKeyRef:
+                  name: config
+                  key: POSTGRES_PASSWORD
             - name: DB_USERNAME
-              value: immich
+              valueFrom:
+                secretKeyRef:
+                  name: config
+                  key: POSTGRES_USER
             # These are settings for the machine learning Pod
             # - name: MACHINE_LEARNING_HOST
             #   value: 0.0.0.0

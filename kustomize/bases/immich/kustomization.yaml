@@ -7,9 +7,9 @@ resources:
   - service.yaml
 
   - redis/
-  #- postgres/
+  - postgres/
 
-# secretGenerator:
-#   - name: config
-#     envs:
-#       - config.env
+secretGenerator:
+  - name: config
+    envs:
+      - config.env
