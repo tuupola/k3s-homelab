@@ -27,7 +27,7 @@ $ kubectl apply -k .
 
 ## Note on wildcard certs
 
-Note that wildcard `subjectAltName` will not work.
+Note that `*.tld` style wildcards are not allowed. Wildcard needs to have atleast two levels ie. `*.domain.tld`.
 
 ```
 $ openssl req -x509 -CA cacert.crt -CAkey cacert.key -nodes -days 365 -subj "/CN=internal" -addext "subjectAltName = DNS:*.internal" -addext "authorityKeyIdentifier = keyid,issuer" -addext "basicConstraints = CA:false" -newkey rsa:2048 -keyout tls.key -out tls.crt
