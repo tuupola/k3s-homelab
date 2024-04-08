@@ -16,4 +16,4 @@ spec:
     requests:
       storage: 512Gi
   # Use retain to avoid accidental deleting of the data.
-  storageClassName: longhorn-retain
+  storageClassName: longhorn-mirror-retain
