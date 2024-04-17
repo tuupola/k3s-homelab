@@ -7,7 +7,7 @@ metadata:
     #app.kubernetes.io/component: agent
     app.kubernetes.io/instance: monitoring
     app.kubernetes.io/part-of: prometheus
-    app.kubernetes.io/version: "v1.6.1"
+    app.kubernetes.io/version: "v1.7.0"
 spec:
   selector:
     matchLabels:
@@ -21,7 +21,7 @@ spec:
         #app.kubernetes.io/component: agent
         app.kubernetes.io/instance: monitoring
         app.kubernetes.io/part-of: prometheus
-        app.kubernetes.io/version: "v1.6.1"
+        app.kubernetes.io/version: "v1.7.0"
     spec:
       securityContext:
         runAsUser: 65534
@@ -30,7 +30,7 @@ spec:
         runAsNonRoot: true
       containers:
         - name: node-exporter
-          image: prom/node-exporter:v1.6.1
+          image: prom/node-exporter:v1.7.0
           args:
             - --path.procfs=/host/proc
             - --path.sysfs=/host/sys
