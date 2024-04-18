@@ -36,6 +36,9 @@ spec:
             - --path.sysfs=/host/sys
             - --path.rootfs=/host/root
             - --path.udev.data=/host/root/run/udev/data
+            # Ignore Longhorn mounts. Only nvme0n1 and sda are real disks.
+            - --collector.diskstats.device-exclude=
+            - --collector.diskstats.device-include=^(nvme0n1|sda)$
             - --collector.filesystem.mount-points-exclude=^/(boot|run|dev|proc|sys|var/lib/kubelet/pods/.+)($|/)
             - --collector.netclass.ignored-devices=^(veth.*|cni.*|flannel.*|lo|[a-f0-9]{15})$
             - --collector.netdev.device-exclude=^(veth.*|cni.*|flannel.*|lo|[a-f0-9]{15})$
