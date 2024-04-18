@@ -91,10 +91,6 @@ scrape_configs:
         action: replace
         target_label: service
 
-  - job_name: prometheus
-    static_configs:
-      - targets: ["localhost:9090"]
-
   - job_name: speedtest
     static_configs:
       - targets: ["speedtest:9273"]

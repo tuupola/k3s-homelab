@@ -8,6 +8,9 @@ metadata:
     app.kubernetes.io/part-of: prometheus
     app.kubernetes.io/instance: monitoring
     app.kubernetes.io/version: v2.50.1
+  annotations:
+    prometheus.io/scrape: true
+    prometheus.io/port: 9090
 spec:
   # Make a headless service.
   clusterIP: None
