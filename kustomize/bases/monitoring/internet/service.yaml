@@ -8,6 +8,9 @@ metadata:
     app.kubernetes.io/instance: monitoring
     app.kubernetes.io/part-of: influxdb
     app.kubernetes.io/version: "1.25.3"
+  annotations:
+      prometheus.io/scrape: true
+      prometheus.io/port: 9273
 spec:
   # Make a headless service.
   clusterIP: None

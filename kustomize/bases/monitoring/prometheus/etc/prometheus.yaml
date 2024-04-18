@@ -95,10 +95,6 @@ scrape_configs:
     static_configs:
       - targets: ["localhost:9090"]
 
-  - job_name: internet
-    static_configs:
-      - targets: ["internet:9273"]
-
   - job_name: speedtest
     static_configs:
       - targets: ["speedtest:9273"]
