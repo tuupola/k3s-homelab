@@ -94,7 +94,3 @@ scrape_configs:
   - job_name: speedtest
     static_configs:
       - targets: ["speedtest:9273"]
-
-  - job_name: node
-    static_configs:
-      - targets: ["nuc-00:9100", "nuc-01:9100", "nuc-02:9100"]
