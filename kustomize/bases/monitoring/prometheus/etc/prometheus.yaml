@@ -61,6 +61,23 @@ scrape_configs:
       - action: labelmap
         regex: __meta_kubernetes_node_label_(.+)
 
+  # Special config for Node Exporter
+  - job_name: node-exporter
+
+    kubernetes_sd_configs:
+      - role: endpoints
+
+    relabel_configs:
+      - source_labels: [__meta_kubernetes_endpoints_name]
+        regex: "node-exporter"
+        action: keep
+
+      - action: labelmap
+        regex: __meta_kubernetes_service_label_(.+)
+
+      - source_labels: [__meta_kubernetes_endpoint_node_name]
+        action: replace
+        target_label: instance
 
   - job_name: "kubernetes-service-endpoints"
 
