@@ -4,11 +4,11 @@ metadata:
   name: prometheus
   labels:
     app.kubernetes.io/name: prometheus
-    app.kubernetes.io/component: server
-    app.kubernetes.io/part-of: prometheus
-    app.kubernetes.io/instance: monitoring
+    app.kubernetes.io/part-of: monitoring
+    app.kubernetes.io/instance: monitoring-prometheus
     app.kubernetes.io/version: v2.50.1
   annotations:
+    # Scrape only the service not each service endpoint.
     prometheus.io/scrape: service
 spec:
   # Make a headless service.
@@ -17,6 +17,5 @@ spec:
     - port: 9090
       targetPort: 9090
   selector:
-    app.kubernetes.io/component: server
     app.kubernetes.io/name: prometheus
-    app.kubernetes.io/instance: monitoring
+    app.kubernetes.io/instance: monitoring-prometheus
