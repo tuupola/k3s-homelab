@@ -3,6 +3,11 @@ global:
   scrape_timeout: 10s
 
 scrape_configs:
+
+  #
+  # https://kubernetes.io/docs/reference/instrumentation/metrics/
+  #
+
   - job_name: "kubernetes-apiservers"
 
     kubernetes_sd_configs:
@@ -26,6 +31,10 @@ scrape_configs:
         action: keep
         regex: default;kubernetes;https
 
+  #
+  # https://kubernetes.io/docs/reference/instrumentation/node-metrics/
+  #
+
   - job_name: "kubernetes-nodes"
     scheme: https
 
@@ -42,6 +51,9 @@ scrape_configs:
       - action: labelmap
         regex: __meta_kubernetes_node_label_(.+)
 
+  #
+  # https://github.com/google/cadvisor
+  #
 
   - job_name: "kubernetes-cadvisor"
     scheme: https
@@ -61,7 +73,10 @@ scrape_configs:
       - action: labelmap
         regex: __meta_kubernetes_node_label_(.+)
 
-  # Special config for Node Exporter
+  #
+  # https://github.com/prometheus/node_exporter
+  #
+
   - job_name: node-exporter
 
     kubernetes_sd_configs:
@@ -75,9 +90,14 @@ scrape_configs:
       - action: labelmap
         regex: __meta_kubernetes_service_label_(.+)
 
+      # Set hostname (nuc-00, nuc-01 etc) as instance label.
       - source_labels: [__meta_kubernetes_endpoint_node_name]
         action: replace
         target_label: instance
+
+  #
+  # $ kubectl get endpoints --all-namespaces
+  #
 
   - job_name: "kubernetes-service-endpoints"
 
@@ -87,15 +107,15 @@ scrape_configs:
     relabel_configs:
 
       # annotations:
-      #   prometheus.io/scrape: true
+      #   prometheus.io/scrape: true|endpoints
       #   prometheus.io/path: /metrics
       #   prometheus.io/port: 9191
       #   prometheus.io.scheme: https
 
-      # prometheus.io/scrape: true
+      # prometheus.io/scrape: true|endpoints
       - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
         action: keep
-        regex: true
+        regex: (true|endpoints?)
 
       # prometheus.io/path: /metrics
       - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
@@ -126,3 +146,97 @@ scrape_configs:
       - source_labels: [__meta_kubernetes_service_name]
         action: replace
         target_label: service
+
+  #
+  # $ kubectl get services --all-namespaces
+  #
+
+  - job_name: "kubernetes-services"
+
+    kubernetes_sd_configs:
+      - role: service
+
+    relabel_configs:
+
+      # annotations:
+      #   prometheus.io/scrape: service
+      #   prometheus.io/path: /metrics
+      #   prometheus.io/port: 9191
+      #   prometheus.io.scheme: https
+
+      # prometheus.io/scrape: service
+      - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
+        action: keep
+        regex: service
+
+      # prometheus.io/path: /metrics
+      - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
+        action: replace
+        target_label: __metrics_path__
+        regex: (.+)
+
+      # prometheus.io/port: 9191
+      - source_labels: [__address__, __meta_kubernetes_service_annotation_prometheus_io_port]
+        action: replace
+        regex: ([^:]+)(?::\d+)?;(\d+)
+        replacement: $1:$2
+        target_label: __address__
+
+      # prometheus.io/scheme: https
+      - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scheme]
+        action: replace
+        target_label: __scheme__
+        regex: (https?)
+
+      - action: labelmap
+        regex: __meta_kubernetes_service_label_(.+)
+
+      - source_labels: [__meta_kubernetes_namespace]
+        action: replace
+        target_label: namespace
+
+      - source_labels: [__meta_kubernetes_service_name]
+        action: replace
+        target_label: service
+
+
+  - job_name: "kubernetes-pods"
+
+    kubernetes_sd_configs:
+      - role: pod
+
+    relabel_configs:
+
+      # annotations:
+      #   prometheus.io/scrape: true
+      #   prometheus.io/path: /metrics
+      #   prometheus.io/port: 9191
+
+      # prometheus.io/scrape: true
+      - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+        action: keep
+        regex: true
+
+      # prometheus.io/path: /metrics
+      - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+        action: replace
+        target_label: __metrics_path__
+        regex: (.+)
+
+      # prometheus.io/port: 9191
+      - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+        action: replace
+        regex: ([^:]+)(?::\d+)?;(\d+)
+        replacement: $1:$2
+        target_label: __address__
+
+      - action: labelmap
+        regex: __meta_kubernetes_pod_label_(.+)
+
+      - source_labels: [__meta_kubernetes_namespace]
+        action: replace
+        target_label: namespace
+
+      - source_labels: [__meta_kubernetes_pod_name]
+        action: replace
+        target_label: pod
