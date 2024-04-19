@@ -4,10 +4,9 @@ metadata:
   name: node-exporter
   labels:
     app.kubernetes.io/name: node-exporter
-    #app.kubernetes.io/component: agent
-    app.kubernetes.io/instance: monitoring
-    app.kubernetes.io/part-of: prometheus
-    app.kubernetes.io/version: "v1.7.0"
+    app.kubernetes.io/part-of: monitoring
+    app.kubernetes.io/instance: monitoring-node-exporter
+    app.kubernetes.io/version: v1.7.0
 spec:
   # Make a headless service.
   clusterIP: None
@@ -16,5 +15,4 @@ spec:
       targetPort: 9100
   selector:
     app.kubernetes.io/name: node-exporter
-    #app.kubernetes.io/component: agent
-    app.kubernetes.io/instance: monitoring
+    app.kubernetes.io/instance: monitoring-node-exporter
