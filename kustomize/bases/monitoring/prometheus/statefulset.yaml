@@ -24,6 +24,7 @@ spec:
         app.kubernetes.io/instance: monitoring
         app.kubernetes.io/version: v2.50.1
     spec:
+      serviceAccount: prometheus
       containers:
         - name: prometheus
           image: "quay.io/prometheus/prometheus:v2.50.1"

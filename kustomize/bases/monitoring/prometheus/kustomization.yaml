@@ -1,6 +1,9 @@
 namespace: monitoring
 resources:
   - pvc.yaml
+  - clusterrole.yaml
+  - clusterrolebinding.yaml
+  - serviceaccount.yaml
   - statefulset.yaml
   - service.yaml
   - ingress.yaml
