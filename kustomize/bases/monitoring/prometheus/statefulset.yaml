@@ -35,7 +35,7 @@ spec:
           # ports:
           #   - containerPort: 9090
           volumeMounts:
-            - name: prometheus-config
+            - name: prometheus
               mountPath: /etc/prometheus/
             - name: storage
               mountPath: /prometheus/
@@ -45,9 +45,9 @@ spec:
         runAsGroup: 65534
         runAsUser: 65534
       volumes:
-        - name: prometheus-config
+        - name: prometheus
           configMap:
-            name: prometheus-config
+            name: prometheus
         - name: storage
           persistentVolumeClaim:
             claimName: storage

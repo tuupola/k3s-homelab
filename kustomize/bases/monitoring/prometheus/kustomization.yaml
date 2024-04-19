@@ -7,6 +7,6 @@ resources:
   - service.yaml
   - ingress.yaml
 configMapGenerator:
-- name: prometheus-config
+- name: prometheus
   files:
     - etc/prometheus.yaml
