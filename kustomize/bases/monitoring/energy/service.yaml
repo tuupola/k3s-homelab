@@ -9,8 +9,7 @@ metadata:
     app.kubernetes.io/part-of: influxdb
     app.kubernetes.io/version: "1.25.3"
   annotations:
-      prometheus.io/scrape: true
-      prometheus.io/port: 9273
+      prometheus.io/scrape: service
 spec:
   # Make a headless service.
   clusterIP: None
