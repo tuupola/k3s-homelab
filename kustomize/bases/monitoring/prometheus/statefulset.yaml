@@ -27,7 +27,7 @@ spec:
           image: "quay.io/prometheus/prometheus:v2.50.1"
           args:
             - --config.file=/etc/prometheus/prometheus.yaml
-            - --storage.tsdb.path=/prometheus
+            - --storage.tsdb.path=/storage
             - --storage.tsdb.retention.time=1y
             #- --web.enable-admin-api
           # This is only informational and not necessarily needed.
@@ -38,7 +38,7 @@ spec:
             - name: prometheus
               mountPath: /etc/prometheus/
             - name: storage
-              mountPath: /prometheus/
+              mountPath: /storage/
       securityContext:
         # These enable Prometheus to write to the pvc.
         fsGroup: 65534
