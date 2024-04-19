@@ -29,6 +29,7 @@ spec:
             - --config.file=/etc/prometheus/prometheus.yaml
             - --storage.tsdb.path=/prometheus
             - --storage.tsdb.retention.time=1y
+            #- --web.enable-admin-api
           # This is only informational and not necessarily needed.
           # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.27/#container-v1-core
           # ports:
@@ -36,9 +37,8 @@ spec:
           volumeMounts:
             - name: prometheus-config
               mountPath: /etc/prometheus/
-            - name: prometheus-storage
+            - name: storage
               mountPath: /prometheus/
-              subPath: ""
       securityContext:
         # These enable Prometheus to write to the pvc.
         fsGroup: 65534
@@ -48,9 +48,16 @@ spec:
         - name: prometheus-config
           configMap:
             name: prometheus-config
-        # Ephemeral storage, good for testing.
-        # - name: prometheus-storage
-        #   emptyDir: {}
-        - name: prometheus-storage
+        - name: storage
           persistentVolumeClaim:
-            claimName: prometheus
+            claimName: storage
+  volumeClaimTemplates:
+    - metadata:
+        name: storage
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 64Gi
+        storageClassName: longhorn-retain
