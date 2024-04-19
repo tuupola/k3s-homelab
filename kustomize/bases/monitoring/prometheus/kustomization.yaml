@@ -1,6 +1,5 @@
 namespace: monitoring
 resources:
-  - pvc.yaml
   - clusterrole.yaml
   - clusterrolebinding.yaml
   - serviceaccount.yaml
@@ -8,6 +7,6 @@ resources:
   - service.yaml
   - ingress.yaml
 configMapGenerator:
-- name: prometheus-config
+- name: prometheus
   files:
     - etc/prometheus.yaml

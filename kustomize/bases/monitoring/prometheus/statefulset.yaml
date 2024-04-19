@@ -27,30 +27,37 @@ spec:
           image: "quay.io/prometheus/prometheus:v2.50.1"
           args:
             - --config.file=/etc/prometheus/prometheus.yaml
-            - --storage.tsdb.path=/prometheus
+            - --storage.tsdb.path=/storage
             - --storage.tsdb.retention.time=1y
+            #- --web.enable-admin-api
           # This is only informational and not necessarily needed.
           # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.27/#container-v1-core
           # ports:
           #   - containerPort: 9090
           volumeMounts:
-            - name: prometheus-config
+            - name: prometheus
               mountPath: /etc/prometheus/
-            - name: prometheus-storage
-              mountPath: /prometheus/
-              subPath: ""
+            - name: storage
+              mountPath: /storage/
       securityContext:
         # These enable Prometheus to write to the pvc.
         fsGroup: 65534
         runAsGroup: 65534
         runAsUser: 65534
       volumes:
-        - name: prometheus-config
+        - name: prometheus
           configMap:
-            name: prometheus-config
-        # Ephemeral storage, good for testing.
-        # - name: prometheus-storage
-        #   emptyDir: {}
-        - name: prometheus-storage
+            name: prometheus
+        - name: storage
           persistentVolumeClaim:
-            claimName: prometheus
+            claimName: storage
+  volumeClaimTemplates:
+    - metadata:
+        name: storage
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 64Gi
+        storageClassName: longhorn-retain
