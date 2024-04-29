@@ -29,9 +29,9 @@ spec:
           # ports:
           #   - containerPort: 9273
           volumeMounts:
-            - name: telegraf-config
+            - name: internet
               mountPath: /etc/telegraf/
       volumes:
-        - name: telegraf-config
+        - name: internet
           configMap:
-            name: telegraf-config
+            name: internet

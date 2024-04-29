@@ -3,6 +3,6 @@ resources:
   - deployment.yaml
   - service.yaml
 configMapGenerator:
-- name: telegraf-config
+- name: energy
   files:
     - etc/telegraf/telegraf.conf
