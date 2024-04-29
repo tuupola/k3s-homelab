@@ -1,0 +1,102 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: immich
+  labels:
+    app.kubernetes.io/name: immich
+    app.kubernetes.io/component: server
+    app.kubernetes.io/part-of: immich
+    app.kubernetes.io/instance: immich-server
+    app.kubernetes.io/version: v1.102.2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: server
+      app.kubernetes.io/instance: immich-server
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: server
+        app.kubernetes.io/component: server
+        app.kubernetes.io/part-of: immich
+        app.kubernetes.io/instance: immich-server
+        app.kubernetes.io/version: v1.102.2
+    spec:
+      containers:
+        - name: server
+          image: ghcr.io/immich-app/immich-server:v1.102.2
+          imagePullPolicy: IfNotPresent
+          command:
+            - "/bin/sh"
+          args:
+            - ./start-server.sh
+          env:
+            - name: LOG_LEVEL
+              value: verbose
+            - name: DB_HOSTNAME
+              value: postgres.immich
+            - name: DB_DATABASE_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: config
+                  key: POSTGRES_DB
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: config
+                  key: POSTGRES_PASSWORD
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: config
+                  key: POSTGRES_USER
+            # These are settings for the machine learning Pod
+            # - name: MACHINE_LEARNING_HOST
+            #   value: 0.0.0.0
+            - name: MACHINE_LEARNING_PORT
+              value: "3003"
+            # This is the url for accessing the machine learning service
+            - name: IMMICH_MACHINE_LEARNING_URL
+              value: http://machine-learning.immich:3003
+            - name: REDIS_HOSTNAME
+              value: redis.immich
+            - name: REDIS_PORT
+              value: "6379"
+          # This is only for documentation purposes and does not affect anything.
+          # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.27/#container-v1-core
+          # ports:
+          #   - containerPort: 3001
+          volumeMounts:
+            - name: storage
+              mountPath: /usr/src/app/upload
+            - mountPath: /external
+              name: external
+          livenessProbe:
+            httpGet:
+              path: /server-info/ping
+              port: 3001
+          readinessProbe:
+            httpGet:
+              path: /server-info/ping
+              port: 3001
+      volumes:
+        # - name: library
+        #   persistentVolumeClaim:
+        #     claimName: storage
+        - name: external
+          nfs:
+            path: /srv/nfs/usb/photos
+            readOnly: true
+            server: nuc-01.internal
+  volumeClaimTemplates:
+    - metadata:
+        name: storage
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 512Gi
+        storageClassName: longhorn-mirror-retain

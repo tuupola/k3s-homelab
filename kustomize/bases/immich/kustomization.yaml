@@ -4,7 +4,6 @@ resources:
   - namespace.yaml
   - ingress.yaml
   - statefulset.yaml
-  - deployment.yaml
   - service.yaml
 
   - redis/
