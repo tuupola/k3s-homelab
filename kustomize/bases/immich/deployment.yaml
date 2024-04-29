@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/component: machine-learning
     app.kubernetes.io/part-of: immich
     app.kubernetes.io/instance: immich-machine-learning
-    app.kubernetes.io/version: v1.100.0
+    app.kubernetes.io/version: v1.102.2
 spec:
   replicas: 3
   selector:
@@ -22,11 +22,11 @@ spec:
         app.kubernetes.io/component: machine-learning
         app.kubernetes.io/part-of: immich
         app.kubernetes.io/instance: immich-machine-learning
-        app.kubernetes.io/version: v1.100.0
+        app.kubernetes.io/version: v1.102.2
     spec:
       containers:
         - name: machine-learning
-          image: ghcr.io/immich-app/immich-machine-learning:v1.100.0
+          image: ghcr.io/immich-app/immich-machine-learning:v1.102.2
           env:
             - name: LOG_LEVEL
               value: verbose
@@ -89,7 +89,7 @@ metadata:
     app.kubernetes.io/component: microservices
     app.kubernetes.io/part-of: immich
     app.kubernetes.io/instance: immich-microservices
-    app.kubernetes.io/version: v1.100.0
+    app.kubernetes.io/version: v1.102.2
 spec:
   replicas: 1
   selector:
@@ -103,11 +103,11 @@ spec:
         app.kubernetes.io/component: microservices
         app.kubernetes.io/part-of: immich
         app.kubernetes.io/instance: immich-microservices
-        app.kubernetes.io/version: v1.100.0
+        app.kubernetes.io/version: v1.102.2
     spec:
       containers:
         - name: microservices
-          image: ghcr.io/immich-app/immich-server:v1.100.0
+          image: ghcr.io/immich-app/immich-server:v1.102.2
           imagePullPolicy: IfNotPresent
           command:
             - "/bin/sh"
