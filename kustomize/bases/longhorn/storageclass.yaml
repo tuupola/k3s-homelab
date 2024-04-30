@@ -1,3 +1,4 @@
+---
 kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
@@ -9,6 +10,22 @@ reclaimPolicy: Retain
 volumeBindingMode: Immediate
 parameters:
   numberOfReplicas: "3"
+  staleReplicaTimeout: "30"
+  fromBackup: ""
+  fsType: "ext4"
+  dataLocality: "disabled"
+---
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: longhorn-mirror-retain
+provisioner: driver.longhorn.io
+allowVolumeExpansion: true
+reclaimPolicy: Retain
+volumeBindingMode: Immediate
+parameters:
+  # This is the only difference to the "longhorn-retain" storageclass.
+  numberOfReplicas: "2"
   staleReplicaTimeout: "30"
   fromBackup: ""
   fsType: "ext4"
