@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/component: server
     app.kubernetes.io/part-of: immich
     app.kubernetes.io/instance: immich-server
-    app.kubernetes.io/version: v1.102.2
+    app.kubernetes.io/version: v1.103.0
   annotations:
 spec:
   type: ClusterIP
@@ -28,7 +28,7 @@ metadata:
     app.kubernetes.io/component: machine-learning
     app.kubernetes.io/part-of: immich
     app.kubernetes.io/instance: immich-machine-learning
-    app.kubernetes.io/version: v1.102.2
+    app.kubernetes.io/version: v1.103.0
   annotations:
 spec:
   type: ClusterIP
