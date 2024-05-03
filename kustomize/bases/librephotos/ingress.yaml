@@ -1,0 +1,40 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: librephotos
+  # These are not needed by considered a good practice
+  labels:
+    app.kubernetes.io/name: frontend
+    app.kubernetes.io/component: frontend
+    app.kubernetes.io/part-of: librephotos
+    app.kubernetes.io/instance: librephotos-frontend
+    app.kubernetes.io/version: "2024w14p1"
+  annotations:
+    # Use only 80 and 443 entrypoint
+    traefik.ingress.kubernetes.io/router.entrypoints: web, websecure
+spec:
+  rules:
+    - host: librephotos.internal
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 8001
+          - path: /media
+            pathType: Prefix
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 8001
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend
+                port:
+                  number: 3000

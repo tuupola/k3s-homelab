@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  # These are not needed by considered a good practice
+  labels:
+    app.kubernetes.io/name: frontend
+    app.kubernetes.io/component: frontend
+    app.kubernetes.io/part-of: librephotos
+    app.kubernetes.io/instance: librephotos-frontend
+    app.kubernetes.io/version: "2024w14p1"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: frontend
+      app.kubernetes.io/component: frontend
+      app.kubernetes.io/instance: librephotos-frontend
+  template:
+    metadata:
+      # These are not needed by considered a good practice
+      labels:
+        app.kubernetes.io/name: frontend
+        app.kubernetes.io/component: frontend
+        app.kubernetes.io/part-of: librephotos
+        app.kubernetes.io/instance: librephotos-frontend
+        app.kubernetes.io/version: "2024w14p1"
+    spec:
+      containers:
+        - name: librephotos
+          image: reallibrephotos/librephotos-frontend:2024w14p1
