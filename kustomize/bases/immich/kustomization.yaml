@@ -2,9 +2,8 @@
 namespace: immich
 resources:
   - namespace.yaml
-  - pvc.yaml
   - ingress.yaml
-  - deployment.yaml
+  - statefulset.yaml
   - service.yaml
 
   - redis/
