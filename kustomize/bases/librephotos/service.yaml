@@ -39,3 +39,24 @@ spec:
     app.kubernetes.io/name: backend
     app.kubernetes.io/component: backend
     app.kubernetes.io/instance: librephotos-backend
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: proxy
+  # These are not needed by considered a good practice
+  labels:
+    app.kubernetes.io/name: backend
+    app.kubernetes.io/component: proxy
+    app.kubernetes.io/part-of: librephotos
+    app.kubernetes.io/instance: librephotos-proxy
+    app.kubernetes.io/version: "2024w14p1"
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    app.kubernetes.io/name: proxy
+    app.kubernetes.io/component: proxy
+    app.kubernetes.io/instance: librephotos-proxy

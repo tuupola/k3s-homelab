@@ -1,8 +1,9 @@
 namespace: librephotos
 resources:
   #- namespace.yaml
+  - pvc.yaml
   - deployment.yaml
-  - statefulset.yaml
+  #- statefulset.yaml
   - service.yaml
   - ingress.yaml
   - postgres/service.yaml

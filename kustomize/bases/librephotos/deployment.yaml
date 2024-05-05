@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -29,3 +30,139 @@ spec:
       containers:
         - name: librephotos
           image: reallibrephotos/librephotos-frontend:2024w14p1
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proxy
+  # These are not needed by considered a good practice
+  labels:
+    app.kubernetes.io/name: proxy
+    app.kubernetes.io/component: proxy
+    app.kubernetes.io/part-of: librephotos
+    app.kubernetes.io/instance: librephotos-proxy
+    app.kubernetes.io/version: "2024w14p1"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: proxy
+      app.kubernetes.io/component: proxy
+      app.kubernetes.io/instance: librephotos-proxy
+  template:
+    metadata:
+      # These are not needed by considered a good practice
+      labels:
+        app.kubernetes.io/name: proxy
+        app.kubernetes.io/component: proxy
+        app.kubernetes.io/part-of: librephotos
+        app.kubernetes.io/instance: librephotos-proxy
+        app.kubernetes.io/version: "2024w14p1"
+    spec:
+      containers:
+        - name: librephotos
+          image: reallibrephotos/librephotos-proxy:2024w14p1
+          volumeMounts:
+            - name: data
+              mountPath: /data
+            - name: protected
+              mountPath: /protected_media
+      volumes:
+        # Cache shared with backend
+        - name: protected
+          persistentVolumeClaim:
+            claimName: protected
+        # External library shared via nfs
+        - name: data
+          nfs:
+            path: /srv/nfs/usb/photos
+            readOnly: true
+            server: nuc-01.internal
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  # These are not needed by considered a good practice
+  labels:
+    app.kubernetes.io/name: backend
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/part-of: librephotos
+    app.kubernetes.io/instance: librephotos-backend
+    app.kubernetes.io/version: "2024w14p1"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: backend
+      app.kubernetes.io/component: backend
+      app.kubernetes.io/instance: librephotos-backend
+  template:
+    metadata:
+      # These are not needed by considered a good practice
+      labels:
+        app.kubernetes.io/name: backend
+        app.kubernetes.io/component: backend
+        app.kubernetes.io/part-of: librephotos
+        app.kubernetes.io/instance: librephotos-backend
+        app.kubernetes.io/version: "2024w14p1"
+    spec:
+      containers:
+        - name: librephotos
+          image: reallibrephotos/librephotos:2024w14p1
+          env:
+            - name: SECRET_KEY
+              value: "cWeUFBcg6wPaoRCAsN454HVPK5e2YN8e"
+            # - name: BACKEND_HOST
+            #   value: "librephotos.internal"
+            # Probably Django ALLOWED_HOSTS setting?
+            - name: BACKEND_HOST
+              value: "backend"
+            - name: ADMIN_EMAIL
+              value: "tuupola@appelsiini.net"
+            - name: ADMIN_USERNAME
+              value: "tuupola"
+            - name: ADMIN_PASSWORD
+              value: "test"
+            - name: DB_BACKEND
+              value: "postgresql"
+            - name: DB_NAME
+              value: "librephotos"
+            - name: DB_USER
+              value: "postgres"
+            - name: DB_PASS
+              value: "example"
+            - name: DB_HOST
+              value: "postgres.librephotos.svc.cluster.local"
+            - name: DB_PORT
+              value: "5432"
+            # - name: MAPBOX_API_KEY
+            #   value: "postgres"
+            # - name: WEB_CONCURRENCY
+            #   value: "postgres"
+            # - name: SKIP_PATTERNS
+            #   value: "postgres"
+            - name: ALLOW_UPLOAD
+              value: "1"
+            # - name: CSRF_TRUSTED_ORIGINS
+            #   value: "postgres"
+            - name: DEBUG
+              value: "1"
+            - name: HEAVYWEIGHT_PROCESS
+              value: "1"
+          volumeMounts:
+            - name: data
+              mountPath: /data
+            - name: protected
+              mountPath: /protected_media
+      volumes:
+        # Cache shared with backend
+        - name: protected
+          persistentVolumeClaim:
+            claimName: protected
+        # External library shared via nfs
+        - name: data
+          nfs:
+            path: /srv/nfs/usb/photos
+            readOnly: true
+            server: nuc-01.internal

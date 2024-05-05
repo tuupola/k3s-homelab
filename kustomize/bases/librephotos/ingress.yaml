@@ -17,24 +17,31 @@ spec:
     - host: librephotos.internal
       http:
         paths:
-          - path: /api
-            pathType: Prefix
-            backend:
-              service:
-                name: backend
-                port:
-                  number: 8001
-          - path: /media
-            pathType: Prefix
-            backend:
-              service:
-                name: backend
-                port:
-                  number: 8001
+          # - path: /api
+          #   pathType: Prefix
+          #   backend:
+          #     service:
+          #       name: backend
+          #       port:
+          #         number: 8001
+          # - path: /media
+          #   pathType: Prefix
+          #   backend:
+          #     service:
+          #       name: backend
+          #       port:
+          #         number: 8001
+          # - path: /
+          #   pathType: Prefix
+          #   backend:
+          #     service:
+          #       name: frontend
+          #       port:
+          #         number: 3000
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: frontend
+                name: proxy
                 port:
-                  number: 3000
+                  number: 80
