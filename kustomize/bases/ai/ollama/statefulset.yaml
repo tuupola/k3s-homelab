@@ -1,0 +1,80 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ollama
+  labels:
+    app.kubernetes.io/name: ollama
+    app.kubernetes.io/component: llm
+    app.kubernetes.io/part-of: ai
+    app.kubernetes.io/instance: ai-ollama
+    app.kubernetes.io/version: "0.1.33"
+spec:
+  replicas: 1
+  serviceName: ollama
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ollama
+      app.kubernetes.io/component: llm
+      app.kubernetes.io/instance: ai-ollama
+  template:
+    metadata:
+      name: ollama
+      # These are not needed but considered a good practice
+      labels:
+        app.kubernetes.io/name: ollama
+        app.kubernetes.io/component: llm
+        app.kubernetes.io/part-of: ai
+        app.kubernetes.io/instance: ai-ollama
+        app.kubernetes.io/version: "0.1.33"
+    spec:
+      containers:
+        - name: ollama
+          image: ollama/ollama:0.1.33
+          env:
+            # - name: PGDATA
+            #   value: /postgresql/data
+            # # These are created automagically
+            # - name: POSTGRES_USER
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: config
+            #       key: POSTGRES_USER
+          # livenessProbe:
+          #   initialDelaySeconds: 30
+          #   timeoutSeconds: 5
+          #   failureThreshold: 6
+          #   exec:
+          #     command:
+          #       - /bin/sh
+          #       - -c
+          #       - exec pg_isready -U "ollama" -h 127.0.0.1 -p 5432
+          # readinessProbe:
+          #   initialDelaySeconds: 5
+          #   timeoutSeconds: 5
+          #   failureThreshold: 6
+          #   exec:
+          #     command:
+          #       - /bin/sh
+          #       - -c
+          #       - exec pg_isready -U "ollama" -h 127.0.0.1 -p 5432
+          resources:
+            requests:
+              cpu: 2000m
+              memory: 2Gi
+            limits:
+              cpu: 8000m
+              memory: 16Gi
+          volumeMounts:
+            - name: cache
+              mountPath: /root/.ollama
+  volumeClaimTemplates:
+    - metadata:
+        name: cache
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 64Gi
+        storageClassName: longhorn-mirror-retain
