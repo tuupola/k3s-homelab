@@ -31,33 +31,13 @@ spec:
       containers:
         - name: ollama
           image: ollama/ollama:0.1.33
-          env:
-            # - name: PGDATA
-            #   value: /postgresql/data
-            # # These are created automagically
-            # - name: POSTGRES_USER
-            #   valueFrom:
-            #     secretKeyRef:
-            #       name: config
-            #       key: POSTGRES_USER
-          # livenessProbe:
-          #   initialDelaySeconds: 30
-          #   timeoutSeconds: 5
-          #   failureThreshold: 6
-          #   exec:
-          #     command:
-          #       - /bin/sh
-          #       - -c
-          #       - exec pg_isready -U "ollama" -h 127.0.0.1 -p 5432
-          # readinessProbe:
-          #   initialDelaySeconds: 5
-          #   timeoutSeconds: 5
-          #   failureThreshold: 6
-          #   exec:
-          #     command:
-          #       - /bin/sh
-          #       - -c
-          #       - exec pg_isready -U "ollama" -h 127.0.0.1 -p 5432
+          # If liveness probe fails Kubernetes will restart the pod.
+          livenessProbe:
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            httpGet:
+              path: /
+              port: 8080
           resources:
             requests:
               cpu: 2000m
