@@ -1,0 +1,5 @@
+namespace: ai
+resources:
+  - statefulset.yaml
+  - service.yaml
+  - ingress.yaml
