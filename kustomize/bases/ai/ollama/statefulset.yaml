@@ -37,7 +37,7 @@ spec:
             periodSeconds: 5
             httpGet:
               path: /
-              port: 8080
+              port: 11434
           resources:
             requests:
               cpu: 2000m
