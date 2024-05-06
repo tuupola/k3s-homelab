@@ -2,3 +2,4 @@ namespace: ai
 resources:
   #- namespace.yaml
   - ollama
+  - openwebui

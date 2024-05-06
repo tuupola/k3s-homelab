@@ -1,0 +1,63 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: openwebui
+  labels:
+    app.kubernetes.io/name: openwebui
+    app.kubernetes.io/component: frontend
+    app.kubernetes.io/part-of: ai
+    app.kubernetes.io/instance: ai-openwebui
+    app.kubernetes.io/version: main
+spec:
+  replicas: 1
+  serviceName: openwebui
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: openwebui
+      app.kubernetes.io/component: frontend
+      app.kubernetes.io/instance: ai-openwebui
+  template:
+    metadata:
+      name: openwebui
+      # These are not needed but considered a good practice
+      labels:
+        app.kubernetes.io/name: openwebui
+        app.kubernetes.io/component: frontend
+        app.kubernetes.io/part-of: ai
+        app.kubernetes.io/instance: ai-openwebui
+        app.kubernetes.io/version: main
+    spec:
+      containers:
+        - name: openwebui
+          image: ghcr.io/open-webui/open-webui:main
+          env:
+          - name: OLLAMA_BASE_URL
+            value: "http://ollama.ai.svc.cluster.local:11434"
+          # If liveness probe fails Kubernetes will restart the pod.
+          livenessProbe:
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            httpGet:
+              path: /
+              port: 8080
+          resources:
+            requests:
+              cpu: 500m
+              memory: 512Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+          volumeMounts:
+            - name: data
+              mountPath: /app/backend/data
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 64Gi
+        storageClassName: longhorn-mirror-retain
