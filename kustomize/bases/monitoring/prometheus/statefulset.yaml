@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/name: prometheus
     app.kubernetes.io/part-of: monitoring
     app.kubernetes.io/instance: monitoring-prometheus
-    app.kubernetes.io/version: v2.50.1
+    app.kubernetes.io/version: v2.53.0
 spec:
   replicas: 1
   selector:
@@ -19,12 +19,12 @@ spec:
         app.kubernetes.io/name: prometheus
         app.kubernetes.io/part-of: monitoring
         app.kubernetes.io/instance: monitoring-prometheus
-        app.kubernetes.io/version: v2.50.1
+        app.kubernetes.io/version: v2.53.0
     spec:
       serviceAccount: prometheus
       containers:
         - name: prometheus
-          image: "quay.io/prometheus/prometheus:v2.50.1"
+          image: "quay.io/prometheus/prometheus:v2.53.0"
           args:
             - --config.file=/etc/prometheus/prometheus.yaml
             - --storage.tsdb.path=/storage

@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/name: prometheus
     app.kubernetes.io/part-of: monitoring
     app.kubernetes.io/instance: monitoring-prometheus
-    app.kubernetes.io/version: v2.50.1
+    app.kubernetes.io/version: v2.53.0
   annotations:
     # Scrape only the service not each service endpoint.
     prometheus.io/scrape: service
