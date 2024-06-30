@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/name: internet
     app.kubernetes.io/part-of: monitoring
     app.kubernetes.io/instance: monitoring-internet
-    app.kubernetes.io/version: 1.27.4
+    app.kubernetes.io/version: 1.29.5
 spec:
   replicas: 1
   selector:
@@ -19,11 +19,11 @@ spec:
         app.kubernetes.io/name: internet
         app.kubernetes.io/part-of: monitoring
         app.kubernetes.io/instance: monitoring-internet
-        app.kubernetes.io/version: 1.27.4
+        app.kubernetes.io/version: 1.29.5
     spec:
       containers:
         - name: telegraf
-          image: telegraf:1.27.4-alpine
+          image: telegraf:1.29.5-alpine
           # This is only informational and not necessarily needed.
           # https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.27/#container-v1-core
           # ports:

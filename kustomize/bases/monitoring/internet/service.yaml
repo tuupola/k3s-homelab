@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/name: internet
     app.kubernetes.io/part-of: monitoring
     app.kubernetes.io/instance: monitoring-internet
-    app.kubernetes.io/version: 1.27.4
+    app.kubernetes.io/version: 1.29.5
   annotations:
     # Scrape only the service not each service endpoint.
     prometheus.io/scrape: service
