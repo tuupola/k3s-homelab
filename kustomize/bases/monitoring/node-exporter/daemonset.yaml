@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/name: node-exporter
     app.kubernetes.io/part-of: monitoring
     app.kubernetes.io/instance: monitoring-node-exporter
-    app.kubernetes.io/version: v1.7.0
+    app.kubernetes.io/version: v1.8.1
 spec:
   selector:
     matchLabels:
@@ -18,7 +18,7 @@ spec:
         app.kubernetes.io/name: node-exporter
         app.kubernetes.io/part-of: monitoring
         app.kubernetes.io/instance: monitoring-node-exporter
-        app.kubernetes.io/version: v1.7.0
+        app.kubernetes.io/version: v1.8.1
     spec:
       securityContext:
         runAsUser: 65534
@@ -27,7 +27,7 @@ spec:
         runAsNonRoot: true
       containers:
         - name: node-exporter
-          image: prom/node-exporter:v1.7.0
+          image: prom/node-exporter:v1.8.1
           args:
             - --path.procfs=/host/proc
             - --path.sysfs=/host/sys
