@@ -3,7 +3,6 @@
   hosts: cluster
   vars:
     k3s_become: true
-    k3s_etcd_datastore: true
     # Rancher needs Kubernetes < 1.27.0-0. Comment this out if
     # not using Rancher to get the latest k3s.
     k3s_release_version: v1.27.16+k3s1
