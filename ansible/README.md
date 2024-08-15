@@ -16,6 +16,7 @@ You must be able to remotely login with either `root` or `ansible` user. If usin
 $ ssh-copy-id -i ~/.ssh/ansible_ed25519.pub root@nuc-00.internal
 $ ssh-copy-id -i ~/.ssh/ansible_ed25519.pub root@nuc-01.internal
 $ ssh-copy-id -i ~/.ssh/ansible_ed25519.pub root@nuc-02.internal
+$ ssh-copy-id -i ~/.ssh/ansible_ed25519.pub root@storage-00.internal
 $ ansible-playbook -v users.yaml
 ```
 
@@ -87,10 +88,12 @@ $ export KUBECONFIG=/path/to/home-lab/k3s.yaml
 
 ```
 $ kubectl get nodes
-NAME     STATUS   ROLES                       AGE     VERSION
-nuc-00   Ready    control-plane,etcd,master   7h45m   v1.27.16+k3s1
-nuc-01   Ready    control-plane,etcd,master   7h38m   v1.27.16+k3s1
-nuc-02   Ready    control-plane,etcd,master   7h44m   v1.27.16+k3s1
+NAME         STATUS   ROLES                       AGE     VERSION
+nuc-00       Ready    control-plane,etcd,master   7h45m   v1.27.16+k3s1
+nuc-01       Ready    control-plane,etcd,master   7h38m   v1.27.16+k3s1
+nuc-02       Ready    control-plane,etcd,master   7h44m   v1.27.16+k3s1
+storage-00   Ready    <none>                      5m4s    v1.27.16+k3s1
+
 ```
 
 # Longhorn prerequisites
