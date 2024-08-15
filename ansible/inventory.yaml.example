@@ -12,3 +12,7 @@ cluster:
       ansible_host: 192.168.20.12
       k3s_control_node: true
       k3s_etcd_datastore: true
+    storage-00:
+      ansible_host: 192.168.20.13
+      k3s_control_node: false
+      k3s_etcd_datastore: false
