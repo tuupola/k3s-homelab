@@ -247,3 +247,10 @@ scrape_configs:
       - source_labels: [__meta_kubernetes_pod_name]
         action: replace
         target_label: pod
+
+  # Shelly plugs running their own prometheus metrics endpoint
+  - job_name: shelly-plugs
+    static_configs:
+      - targets: ["rack-plug.internal:80", "office-plug.internal:80"]
+    metrics_path: /script/1/metrics
+    
