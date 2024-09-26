@@ -8,3 +8,24 @@ configMapGenerator:
 - name: grafana-datasources
   files:
     - etc/grafana/provisioning/datasources/prometheus.yaml
+
+- name: dashboards
+  files:
+    - etc/grafana/provisioning/dashboards/default.yaml
+    - etc/grafana/provisioning/dashboards/kubernetes/apiserver.json
+    - etc/grafana/provisioning/dashboards/kubernetes/cluster-total.json
+    - etc/grafana/provisioning/dashboards/kubernetes/controller-manager.json
+    - etc/grafana/provisioning/dashboards/kubernetes/k8s-resources-cluster.json
+    - etc/grafana/provisioning/dashboards/kubernetes/k8s-resources-namespace.json
+    - etc/grafana/provisioning/dashboards/kubernetes/k8s-resources-node.json
+    - etc/grafana/provisioning/dashboards/kubernetes/k8s-resources-pod.json
+    - etc/grafana/provisioning/dashboards/kubernetes/k8s-resources-workload.json
+    - etc/grafana/provisioning/dashboards/kubernetes/k8s-resources-workloads-namespace.json
+    - etc/grafana/provisioning/dashboards/kubernetes/kubelet.json
+    - etc/grafana/provisioning/dashboards/kubernetes/namespace-by-pod.json
+    - etc/grafana/provisioning/dashboards/kubernetes/namespace-by-workload.json
+    - etc/grafana/provisioning/dashboards/kubernetes/persistentvolumesusage.json
+    - etc/grafana/provisioning/dashboards/kubernetes/pod-total.json
+    - etc/grafana/provisioning/dashboards/kubernetes/proxy.json
+    - etc/grafana/provisioning/dashboards/kubernetes/scheduler.json
+    - etc/grafana/provisioning/dashboards/kubernetes/workload-total.json

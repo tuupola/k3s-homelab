@@ -1,6 +1,7 @@
 namespace: monitoring
 resources:
-  - namespace.yaml
+  # If namespace is accidentally deleted, everything is deleted.
+  #- namespace.yaml
   - prometheus
   - grafana
   - internet
