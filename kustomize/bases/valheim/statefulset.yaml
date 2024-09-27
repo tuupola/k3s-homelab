@@ -1,0 +1,69 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: valheim
+spec:
+  replicas: 1
+  serviceName: valheim
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: valheim
+      app.kubernetes.io/component: server
+      app.kubernetes.io/instance: valheim
+  template:
+    metadata:
+      name: valheim
+      # These are not needed but considered a good practice
+      labels:
+        app.kubernetes.io/name: valheim
+        app.kubernetes.io/component: server
+        app.kubernetes.io/part-of: valheim
+        app.kubernetes.io/instance: valheim
+        app.kubernetes.io/version: latest
+    spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      containers:
+        - name: valheim
+          image: cm2network/valheim:latest
+          env:
+            - name: SERVER_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: config
+                  key: SERVER_NAME
+            - name: SERVER_PW
+              valueFrom:
+                secretKeyRef:
+                  name: config
+                  key: SERVER_PW
+            - name: SERVER_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: config
+                  key: SERVER_PORT
+            - name: SERVER_LOG_PATH
+              value: /dev/stdout
+          resources:
+            requests:
+              cpu: 4000m
+              memory: 2Gi
+            limits:
+              cpu: 6000m
+              memory: 4Gi
+          volumeMounts:
+            - name: data
+              mountPath: /home/steam/valheim-dedicated
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 8Gi
+        storageClassName: longhorn-retain
