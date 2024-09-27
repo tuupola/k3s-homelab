@@ -1,0 +1,47 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  # This service only creates dns entries for each pod in the stateful set.
+  # It is not meant to be used by sql clients.
+  name: postgres
+  labels:
+    app.kubernetes.io/name: postgres
+    app.kubernetes.io/instance: postgres-airflow
+    app.kubernetes.io/version: "16.0"
+    app.kubernetes.io/component: database
+    app.kubernetes.io/part-of: airflow
+spec:
+  type: ClusterIP
+  clusterIP: None
+  publishNotReadyAddresses: true
+  ports:
+    - port: 5432
+      targetPort: 5432
+      name: postgres
+  selector:
+    app.kubernetes.io/name: postgres
+    app.kubernetes.io/instance: postgres-airflow
+    app.kubernetes.io/component: database
+---
+apiVersion: v1
+kind: Service
+metadata:
+  # This service is meant to be used by clients of the database.
+  name: postgres-public
+  labels:
+    app.kubernetes.io/name: postgres
+    app.kubernetes.io/instance: postgres-airflow
+    app.kubernetes.io/version: "16.0"
+    app.kubernetes.io/component: database
+    app.kubernetes.io/part-of: airflow
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5432
+      targetPort: 5432
+      name: postgres
+  selector:
+    app.kubernetes.io/name: postgres
+    app.kubernetes.io/instance: postgres-airflow
+    app.kubernetes.io/component: database
