@@ -1,5 +1,5 @@
 namespace: longhorn-system
 resources:
-  - https://raw.githubusercontent.com/longhorn/longhorn/v1.6.2/deploy/longhorn.yaml
+  - download/longhorn.yaml
   - ingress.yaml
   - storageclass.yaml
