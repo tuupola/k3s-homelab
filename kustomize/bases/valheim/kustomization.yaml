@@ -1,6 +1,6 @@
 namespace: valheim
 resources:
-  - namespace.yaml
+  #- namespace.yaml
   - statefulset.yaml
   - service.yaml
 secretGenerator:
