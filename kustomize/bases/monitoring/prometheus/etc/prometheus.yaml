@@ -85,6 +85,10 @@ scrape_configs:
         labels:
           __meta_kubernetes_endpoints_name: "node-exporter"
           __meta_kubernetes_endpoint_node_name: "nas"
+      - targets: ["192.168.1.1:9100"]
+        labels:
+          __meta_kubernetes_endpoints_name: "node-exporter"
+          __meta_kubernetes_endpoint_node_name: "udm-pro"
 
     kubernetes_sd_configs:
       - role: endpoints
