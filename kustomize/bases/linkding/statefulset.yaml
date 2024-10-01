@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: linkding
+  # These are not needed by considered a good practice
+  labels:
+    app.kubernetes.io/name: linkding
+    app.kubernetes.io/component: server
+    app.kubernetes.io/part-of: linkding
+    app.kubernetes.io/instance: linkding
+    app.kubernetes.io/version: "1.35.0"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: linkding
+      app.kubernetes.io/component: server
+      app.kubernetes.io/instance: linkding
+  template:
+    metadata:
+      # These are not needed by considered a good practice
+      labels:
+        app.kubernetes.io/name: linkding
+        app.kubernetes.io/component: server
+        app.kubernetes.io/part-of: linkding
+        app.kubernetes.io/instance: linkding
+        app.kubernetes.io/version: "1.35.0"
+    spec:
+      containers:
+        - name: linkding
+          image: sissbruecker/linkding:1.35.0
+          volumeMounts:
+            - mountPath: /etc/linkding/data
+              name: linkding
+      volumes:
+        - name: linkding
+          persistentVolumeClaim:
+            claimName: linkding
+  volumeClaimTemplates:
+    - metadata:
+        name: linkding
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+        storageClassName: longhorn-retain
