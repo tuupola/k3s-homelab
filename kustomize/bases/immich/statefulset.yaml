@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/component: server
     app.kubernetes.io/part-of: immich
     app.kubernetes.io/instance: immich-server
-    app.kubernetes.io/version: v1.116.2
+    app.kubernetes.io/version: v1.114.0
 spec:
   replicas: 1
   selector:
@@ -22,16 +22,18 @@ spec:
         app.kubernetes.io/component: server
         app.kubernetes.io/part-of: immich
         app.kubernetes.io/instance: immich-server
-        app.kubernetes.io/version: v1.116.2
+        app.kubernetes.io/version: v1.114.0
     spec:
       containers:
         - name: server
-          image: ghcr.io/immich-app/immich-server:v1.116.2
+          image: ghcr.io/immich-app/immich-server:v1.114.0
           imagePullPolicy: IfNotPresent
-          command:
-            - "/bin/sh"
-          args:
-            - ./start-server.sh
+          # command:
+          #   # - "/bin/sh"
+          #   - "./start.sh"
+          # args:
+          # #   - ./start.sh
+          #   - immich
           env:
             - name: LOG_LEVEL
               value: verbose
@@ -41,17 +43,17 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: config
-                  key: POSTGRES_DB
+                  key: DB_DATABASE_NAME
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: config
-                  key: POSTGRES_PASSWORD
+                  key: DB_PASSWORD
             - name: DB_USERNAME
               valueFrom:
                 secretKeyRef:
                   name: config
-                  key: POSTGRES_USER
+                  key: DB_USERNAME
             # These are settings for the machine learning Pod
             # - name: MACHINE_LEARNING_HOST
             #   value: 0.0.0.0
@@ -71,8 +73,8 @@ spec:
           volumeMounts:
             - name: storage
               mountPath: /usr/src/app/upload
-            - mountPath: /external
-              name: external
+            # - mountPath: /external
+            #   name: external
           livenessProbe:
             httpGet:
               path: /server-info/ping
@@ -85,11 +87,11 @@ spec:
         # - name: library
         #   persistentVolumeClaim:
         #     claimName: storage
-        - name: external
-          nfs:
-            path: /srv/nfs/usb/photos
-            readOnly: true
-            server: nuc-01.internal
+        # - name: external
+        #   nfs:
+        #     path: /srv/nfs/usb/photos
+        #     readOnly: true
+        #     server: nuc-01.internal
   volumeClaimTemplates:
     - metadata:
         name: storage
