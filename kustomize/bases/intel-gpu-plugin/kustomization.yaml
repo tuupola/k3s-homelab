@@ -1,0 +1,4 @@
+namespace: inteldeviceplugins-system
+resources:
+  - namespace.yaml
+  - daemonset.yaml
