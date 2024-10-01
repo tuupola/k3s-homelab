@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/component: server
     app.kubernetes.io/part-of: immich
     app.kubernetes.io/instance: immich-server
-    app.kubernetes.io/version: v1.103.0
+    app.kubernetes.io/version: v1.116.2
   annotations:
     # Use only 80 and 443 entrypoint
     traefik.ingress.kubernetes.io/router.entrypoints: web, websecure
