@@ -1,0 +1,6 @@
+namespace: linkding
+resources:
+#  - namespace.yaml
+  - statefulset.yaml
+  - ingress.yaml
+  - service.yaml
