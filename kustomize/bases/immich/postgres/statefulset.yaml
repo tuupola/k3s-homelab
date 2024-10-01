@@ -43,21 +43,21 @@ spec:
             seccompProfile:
               type: RuntimeDefault
           env:
-            - name: POSTGRES_USER
+            - name: DB_USERNAME
               valueFrom:
                 secretKeyRef:
                   name: config
-                  key: POSTGRES_USER
-            - name: POSTGRES_PASSWORD
+                  key: DB_USERNAME
+            - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: config
-                  key: POSTGRES_PASSWORD
-            - name: POSTGRES_DB
+                  key: DB_PASSWORD
+            - name: DB_DATABASE_NAME
               valueFrom:
                 secretKeyRef:
                   name: config
-                  key: POSTGRES_DB
+                  key: DB_DATABASE_NAME
             # These should be defaults, but postgres cannot initialize without?
             - name: POSTGRES_VOLUME_DIR
               value: "/bitnami/postgresql"
