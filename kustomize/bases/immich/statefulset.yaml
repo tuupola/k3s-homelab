@@ -73,8 +73,8 @@ spec:
           volumeMounts:
             - name: storage
               mountPath: /usr/src/app/upload
-            # - mountPath: /external
-            #   name: external
+            - mountPath: /external
+              name: external
           livenessProbe:
             httpGet:
               path: /server-info/ping
@@ -87,11 +87,11 @@ spec:
         # - name: library
         #   persistentVolumeClaim:
         #     claimName: storage
-        # - name: external
-        #   nfs:
-        #     path: /srv/nfs/usb/photos
-        #     readOnly: true
-        #     server: nuc-01.internal
+        - name: external
+          nfs:
+            path: /mnt/spinner/photos
+            readOnly: true
+            server: nas.internal
   volumeClaimTemplates:
     - metadata:
         name: storage
