@@ -3,3 +3,4 @@ resources:
   - download/longhorn.yaml
   - ingress.yaml
   - storageclass.yaml
+  - recurringjob.yaml
