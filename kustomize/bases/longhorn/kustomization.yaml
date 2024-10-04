@@ -1,5 +1,7 @@
 namespace: longhorn-system
 resources:
+  # - namespace.yaml
   - download/longhorn.yaml
   - ingress.yaml
   - storageclass.yaml
+  - recurringjob.yaml
