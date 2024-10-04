@@ -1,9 +1,9 @@
 ---
 # Builtin: "helm template" does not respect --create-namespace
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: longhorn-system
+# apiVersion: v1
+# kind: Namespace
+# metadata:
+#   name: longhorn-system
 ---
 # Source: longhorn/templates/priorityclass.yaml
 apiVersion: scheduling.k8s.io/v1
