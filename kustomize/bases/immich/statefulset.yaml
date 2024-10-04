@@ -35,7 +35,7 @@ spec:
           # #   - ./start.sh
           #   - immich
           env:
-            - name: LOG_LEVEL
+            - name: IMMICH_LOG_LEVEL
               value: verbose
             - name: DB_HOSTNAME
               value: postgres.immich
