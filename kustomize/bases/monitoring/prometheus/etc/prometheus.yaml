@@ -255,6 +255,6 @@ scrape_configs:
   # Shelly plugs running their own prometheus metrics endpoint
   - job_name: shelly-plugs
     static_configs:
-      - targets: ["rack-plug.internal:80", "office-plug.internal:80"]
+      - targets: ["rack-plug.internal:80", "office-plug.internal:80", "rig-plug.internal:80", "livingroom-plug.internal:80", "boiler-plug.internal:80"]
     metrics_path: /script/1/metrics
     
