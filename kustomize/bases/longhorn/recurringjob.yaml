@@ -3,12 +3,12 @@ kind: RecurringJob
 metadata:
   name: recurring-snapshot
 spec:
-  cron: "05 * * * *"
+  cron: "05 6,18 * * *"
   task: snapshot
   groups:
     - default
-  # 7 * 24 ie one week
-  retain: 168 
+  # 2 * 2 * 7 ie two weeks
+  retain: 28
   concurrency: 2
   labels:
     label/1: automatic
