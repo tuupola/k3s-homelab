@@ -1,0 +1,12 @@
+namespace: forgejo
+resources:
+  - namespace.yaml
+  - statefulset.yaml
+  - service.yaml
+  - ingress.yaml
+  - postgres/service.yaml
+  - postgres/statefulset.yaml
+secretGenerator:
+  - name: config
+    envs:
+      - config.env

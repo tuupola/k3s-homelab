@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: forgejo
+  # These are not needed by considered a good practice
+  labels:
+    app.kubernetes.io/name: forgejo
+    app.kubernetes.io/component: application
+    app.kubernetes.io/part-of: forgejo
+    app.kubernetes.io/instance: forgejo
+    app.kubernetes.io/version: "9.0.1"
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3000
+      targetPort: 3000
+  selector:
+    app.kubernetes.io/name: forgejo
+    app.kubernetes.io/component: application
+    app.kubernetes.io/instance: forgejo
