@@ -1,9 +1,9 @@
 ---
 # Builtin: "helm template" does not respect --create-namespace
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: longhorn-system
+# apiVersion: v1
+# kind: Namespace
+# metadata:
+#   name: longhorn-system
 ---
 # Source: longhorn/templates/priorityclass.yaml
 apiVersion: scheduling.k8s.io/v1
@@ -4814,6 +4814,11 @@ spec:
         app.kubernetes.io/version: v1.7.2
         app: longhorn-manager
     spec:
+      tolerations:
+      - effect: NoSchedule
+        key: dedicated
+        operator: Equal
+        value: storage
       containers:
       - name: longhorn-manager
         image: longhornio/longhorn-manager:v1.7.2
@@ -4932,6 +4937,11 @@ spec:
         app.kubernetes.io/version: v1.7.2
         app: longhorn-driver-deployer
     spec:
+      tolerations:
+        - effect: NoSchedule
+          key: dedicated
+          operator: Equal
+          value: storage
       initContainers:
         - name: wait-longhorn-manager
           image: longhornio/longhorn-manager:v1.7.2
@@ -5015,6 +5025,11 @@ spec:
                   values:
                   - longhorn-ui
               topologyKey: kubernetes.io/hostname
+      tolerations:
+      - effect: NoSchedule
+        key: dedicated
+        operator: Equal
+        value: storage
       containers:
       - name: longhorn-ui
         image: longhornio/longhorn-ui:v1.7.2
