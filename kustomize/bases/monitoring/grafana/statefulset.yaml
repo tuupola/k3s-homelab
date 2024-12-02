@@ -35,6 +35,8 @@ spec:
           volumeMounts:
             - mountPath: /etc/grafana/provisioning/datasources
               name: grafana-datasources
+            - mountPath: /etc/grafana/provisioning/dashboards
+              name: dashboards
             - mountPath: /var/lib/grafana
               name: grafana-storage
           # https://grafana.com/docs/grafana/latest/setup-grafana/installation/kubernetes/
@@ -61,6 +63,9 @@ spec:
         - name: grafana-datasources
           configMap:
             name: grafana-datasources
+        - name: dashboards
+          configMap:
+            name: dashboards
         - name: grafana-storage
           persistentVolumeClaim:
             claimName: grafana

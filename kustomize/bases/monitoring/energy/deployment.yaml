@@ -29,9 +29,9 @@ spec:
           # ports:
           #   - containerPort: 9273
           volumeMounts:
-            - name: telegraf-config
+            - name: energy
               mountPath: /etc/telegraf/
       volumes:
-        - name: telegraf-config
+        - name: energy
           configMap:
-            name: telegraf-config
+            name: energy
