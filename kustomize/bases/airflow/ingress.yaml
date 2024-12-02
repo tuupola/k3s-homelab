@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: airflow
+  # These are not needed by considered a good practice
+  labels:
+    app.kubernetes.io/name: airflow
+    app.kubernetes.io/component: server
+    app.kubernetes.io/part-of: airflow
+    app.kubernetes.io/instance: airflow
+    app.kubernetes.io/version: "2.7.1"
+  annotations:
+    # Use only 80 and 443 entrypoints
+    traefik.ingress.kubernetes.io/router.entrypoints: web, websecure
+spec:
+  rules:
+    - host: airflow.internal
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: airflow
+                port:
+                  number: 8080
