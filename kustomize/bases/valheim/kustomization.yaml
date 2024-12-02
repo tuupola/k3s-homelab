@@ -1,0 +1,9 @@
+namespace: valheim
+resources:
+  #- namespace.yaml
+  - statefulset.yaml
+  - service.yaml
+secretGenerator:
+  - name: config
+    envs:
+      - config.env
