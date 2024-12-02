@@ -1,0 +1,60 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ollama
+  labels:
+    app.kubernetes.io/name: ollama
+    app.kubernetes.io/component: llm
+    app.kubernetes.io/part-of: ai
+    app.kubernetes.io/instance: ai-ollama
+    app.kubernetes.io/version: "0.1.33"
+spec:
+  replicas: 1
+  serviceName: ollama
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ollama
+      app.kubernetes.io/component: llm
+      app.kubernetes.io/instance: ai-ollama
+  template:
+    metadata:
+      name: ollama
+      # These are not needed but considered a good practice
+      labels:
+        app.kubernetes.io/name: ollama
+        app.kubernetes.io/component: llm
+        app.kubernetes.io/part-of: ai
+        app.kubernetes.io/instance: ai-ollama
+        app.kubernetes.io/version: "0.1.33"
+    spec:
+      containers:
+        - name: ollama
+          image: ollama/ollama:0.1.33
+          # If liveness probe fails Kubernetes will restart the pod.
+          livenessProbe:
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            httpGet:
+              path: /
+              port: 11434
+          resources:
+            requests:
+              cpu: 2000m
+              memory: 2Gi
+            limits:
+              cpu: 8000m
+              memory: 16Gi
+          volumeMounts:
+            - name: cache
+              mountPath: /root/.ollama
+  volumeClaimTemplates:
+    - metadata:
+        name: cache
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 64Gi
+        storageClassName: longhorn-mirror-retain
